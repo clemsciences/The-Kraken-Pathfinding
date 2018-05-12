@@ -5,11 +5,8 @@
 
 package pfg.kraken.robot;
 
-import java.awt.Graphics;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import pfg.graphic.GraphicPanel;
-import pfg.graphic.printable.Printable;
 
 /**
  * A point of the itinerary computed by Kraken
@@ -17,10 +14,8 @@ import pfg.graphic.printable.Printable;
  *
  */
 
-public class ItineraryPoint implements Printable
+public class ItineraryPoint
 {
-	private static final long serialVersionUID = 1L;
-
 	/**
 	 * The robot should stop at this point
 	 */
@@ -99,18 +94,6 @@ public class ItineraryPoint implements Printable
 				+ (stop ? ", ending with a stop":"");
 	}
 
-	@Override
-	public void print(Graphics g, GraphicPanel f)
-	{
-		int taille = 5;
-		g.fillOval(f.XtoWindow(x)-taille/2, f.YtoWindow(y)-taille/2, taille, taille);
-		double directionLigne = orientation + Math.PI / 2;
-		double longueur = curvature * 10;
-		int deltaX = (int) (longueur * Math.cos(directionLigne));
-		int deltaY = (int) (longueur * Math.sin(directionLigne));
-		g.drawLine(f.XtoWindow(x), f.YtoWindow(y), f.XtoWindow(x)+deltaX, f.YtoWindow(y)-deltaY);
-	}
-	
 	@Override
 	public int hashCode()
 	{

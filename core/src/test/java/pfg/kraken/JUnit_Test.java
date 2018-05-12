@@ -15,12 +15,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
-
 import pfg.config.Config;
-import pfg.graphic.GraphicDisplay;
 import pfg.injector.Injector;
-import pfg.kraken.ConfigInfoKraken;
 import pfg.kraken.Kraken;
 import pfg.kraken.LogCategoryKraken;
 import pfg.kraken.obstacles.CircularObstacle;
@@ -44,7 +40,6 @@ public abstract class JUnit_Test
 	protected Log log;
 	protected Injector injector;
 	protected Kraken kraken;
-	protected GraphicDisplay display;
 	
 	@Rule
 	public TestName testName = new TestName();
@@ -113,7 +108,6 @@ public abstract class JUnit_Test
 		injector = (Injector) m.invoke(kraken);
 		config = injector.getService(Config.class);
 		log = injector.getService(Log.class);
-		display = kraken.getGraphicDisplay();
 		log.write("Test unitaire : " + testName.getMethodName(), LogCategoryKraken.TEST);
 		
 	}
@@ -125,16 +119,6 @@ public abstract class JUnit_Test
 
 		kraken = new Kraken(robot, fixedObstacles, new XY(-1500, 0), new XY(1500, 2000), "kraken-test.conf", profiles);
 		init(kraken);
-	}
-
-	@After
-	public void tearDown() throws Exception
-	{
-		if(config.getBoolean(ConfigInfoKraken.GRAPHIC_ENABLE))
-		{
-			display.refresh();
-			Thread.sleep(1000);
-		}
 	}
 	
 	/**

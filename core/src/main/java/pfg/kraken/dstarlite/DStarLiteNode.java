@@ -5,12 +5,7 @@
 
 package pfg.kraken.dstarlite;
 
-import java.awt.Graphics;
-
-import pfg.graphic.GraphicPanel;
-import pfg.graphic.printable.Printable;
 import pfg.kraken.dstarlite.navmesh.NavmeshNode;
-import pfg.kraken.utils.XY_RW;
 
 /**
  * Un nœud du D* Lite.
@@ -19,9 +14,8 @@ import pfg.kraken.utils.XY_RW;
  *
  */
 
-public final class DStarLiteNode implements Printable
+public final class DStarLiteNode
 {
-	private static final long serialVersionUID = -6800876007134374180L;
 	public final NavmeshNode node;
 	public int bestVoisin;
 	public final Cle cle = new Cle();
@@ -81,20 +75,4 @@ public final class DStarLiteNode implements Printable
 		}
 	}
 
-	@Override
-	public void print(Graphics g, GraphicPanel f)
-	{
-		if(heuristiqueOrientation != null)
-		{
-			double n = 40;
-			XY_RW point1 = new XY_RW(n, 0), point2 = new XY_RW(-n / 2, n / 2), point3 = new XY_RW(-n / 2, -n / 2);
-			point1.rotate(heuristiqueOrientation).plus(node.position);
-			point2.rotate(heuristiqueOrientation).plus(node.position);
-			point3.rotate(heuristiqueOrientation).plus(node.position);
-			int[] X = { f.XtoWindow((int) point1.getX()), f.XtoWindow((int) point2.getX()), f.XtoWindow((int) point3.getX()) };
-			int[] Y = { f.YtoWindow((int) point1.getY()), f.YtoWindow((int) point2.getY()), f.YtoWindow((int) point3.getY()) };
-
-			g.drawPolygon(X, Y, 3);
-		}
-	}
 }

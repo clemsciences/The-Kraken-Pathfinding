@@ -5,11 +5,8 @@
 
 package pfg.kraken.dstarlite.navmesh;
 
-import java.awt.Graphics;
 import java.io.Serializable;
 
-import pfg.graphic.GraphicPanel;
-import pfg.graphic.printable.Printable;
 import pfg.kraken.utils.XY;
 
 /**
@@ -18,7 +15,7 @@ import pfg.kraken.utils.XY;
  *
  */
 
-public final class NavmeshTriangle implements Serializable, Printable
+public final class NavmeshTriangle implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	transient NavmeshNode[] points = new NavmeshNode[3];
@@ -234,14 +231,6 @@ public final class NavmeshTriangle implements Serializable, Printable
 		return "Triangle with points "+points[0].position+", "+points[1].position+", "+points[2].position+" and edges "+edges[0].shortString()+", "+edges[1].shortString()+", "+edges[2].shortString();
 	}
 
-	@Override
-	public void print(Graphics g, GraphicPanel f)
-	{
-		g.fillPolygon(new int[]{f.XtoWindow(points[0].position.getX()), f.XtoWindow(points[1].position.getX()), f.XtoWindow(points[2].position.getX())},
-				new int[]{f.YtoWindow(points[0].position.getY()), f.YtoWindow(points[1].position.getY()), f.YtoWindow(points[2].position.getY())},
-				3);
-	}
-	
 	@Override
 	public boolean equals(Object o)
 	{

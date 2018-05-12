@@ -6,7 +6,6 @@
 package pfg.kraken.dstarlite.navmesh;
 
 import pfg.config.Config;
-import pfg.graphic.GraphicDisplay;
 import pfg.kraken.utils.XY;
 import pfg.log.Log;
 import pfg.kraken.ConfigInfoKraken;
@@ -29,7 +28,7 @@ public final class Navmesh
 	protected Log log;
 	public TriangulatedMesh mesh;
 	
-	public Navmesh(Log log, Config config, StaticObstacles obs, GraphicDisplay buffer, NavmeshComputer computer)
+	public Navmesh(Log log, Config config, StaticObstacles obs, NavmeshComputer computer)
 	{
 		this.log = log;
 		String filename = config.getString(ConfigInfoKraken.NAVMESH_FILENAME);
@@ -55,8 +54,6 @@ public final class Navmesh
 			}
 		}
 		assert mesh != null;
-		if(config.getBoolean(ConfigInfoKraken.GRAPHIC_NAVMESH))
-			mesh.addToBuffer(buffer);
 	}
 	
 	@Override

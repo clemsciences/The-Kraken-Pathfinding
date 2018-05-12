@@ -5,18 +5,10 @@
 
 package pfg.kraken;
 
-import java.awt.Color;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import pfg.config.Config;
-import pfg.config.ConfigInfo;
-import pfg.graphic.Vec2RO;
 import pfg.log.Log;
-import pfg.graphic.printable.Layer;
-import pfg.graphic.GraphicDisplay;
-import pfg.graphic.ConfigInfoGraphic;
-import pfg.graphic.DebugTool;
 import pfg.injector.Injector;
 import pfg.injector.InjectorException;
 import pfg.kraken.astar.TentacularAStar;
@@ -124,31 +116,6 @@ public final class Kraken
 			else
 				injector.addService(PhysicsEngine.class, injector.getService(DefaultPhysicsEngine.class));
 			
-
-			/*
-			 * Override the graphic config
-			 */
-			HashMap<ConfigInfo, Object> overrideGraphic = new HashMap<ConfigInfo, Object>();
-			overrideGraphic.put(ConfigInfoGraphic.SIZE_X_WITH_UNITARY_ZOOM, (int) (topRightCorner.getX() - bottomLeftCorner.getX()));
-			overrideGraphic.put(ConfigInfoGraphic.SIZE_Y_WITH_UNITARY_ZOOM, (int) (topRightCorner.getY() - bottomLeftCorner.getY()));
-			
-			DebugTool debug = DebugTool.getDebugTool(overrideGraphic, new Vec2RO((topRightCorner.getX() + bottomLeftCorner.getX()) / 2, (topRightCorner.getY() + bottomLeftCorner.getY()) / 2), SeverityCategoryKraken.INFO, configfile, configprofile);
-			injector.addService(debug.getGraphicDisplay());
-			
-			if(config.getBoolean(ConfigInfoKraken.GRAPHIC_ENABLE))
-			{
-				if(config.getBoolean(ConfigInfoKraken.GRAPHIC_SERVER))
-					debug.startPrintServer();
-				
-				if(fixedObstacles != null && config.getBoolean(ConfigInfoKraken.GRAPHIC_FIXED_OBSTACLES))
-				{
-					GraphicDisplay display = injector.getExistingService(GraphicDisplay.class);
-					for(Obstacle o : fixedObstacles)
-						display.addPrintable(o, Color.BLACK, Layer.MIDDLE.layer);
-				}
-			}
-
-
 			astar = injector.getService(TentacularAStar.class);
 			tentaclemanager = injector.getService(TentacleManager.class);
 			profiles = injector.getService(ResearchProfileManager.class);			
@@ -228,15 +195,6 @@ public final class Kraken
 	protected Injector getInjector()
 	{
 		return injector;
-	}
-
-	/**
-	 * Get the graphic display
-	 * @return
-	 */
-	public GraphicDisplay getGraphicDisplay()
-	{
-		return injector.getExistingService(GraphicDisplay.class);
 	}
 	
 	public void addMode(ResearchProfile p)

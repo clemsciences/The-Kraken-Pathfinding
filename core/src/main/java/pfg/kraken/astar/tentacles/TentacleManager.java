@@ -14,7 +14,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 import pfg.config.Config;
 import pfg.injector.Injector;
 import pfg.injector.InjectorException;
-import pfg.kraken.ColorKraken;
 import pfg.kraken.ConfigInfoKraken;
 import pfg.kraken.astar.AStarNode;
 import pfg.kraken.astar.DirectionStrategy;
@@ -27,9 +26,7 @@ import pfg.kraken.memory.NodePool;
 import pfg.kraken.robot.Cinematique;
 import pfg.kraken.robot.CinematiqueObs;
 import pfg.kraken.utils.XYO;
-import pfg.graphic.GraphicDisplay;
 import pfg.log.Log;
-import pfg.graphic.printable.Layer;
 import static pfg.kraken.astar.tentacles.Tentacle.*;
 
 /**
@@ -44,10 +41,8 @@ public final class TentacleManager implements Iterator<AStarNode>
 	protected Log log;
 	private DStarLite dstarlite;
 	private double courbureMax, maxLinearAcceleration, vitesseMax;
-	private boolean printObstacles;
 	private Injector injector;
 	private double deltaSpeedFromStop;
-	private GraphicDisplay display;
 	private TentacleThread[] threads;
 	private ResearchProfile currentProfile;
 	
@@ -60,12 +55,11 @@ public final class TentacleManager implements Iterator<AStarNode>
 	
 	private int nbLeft;
 	
-	public TentacleManager(Log log, NodePool memorymanager, DStarLite dstarlite, Config config, Injector injector, ResearchProfileManager profiles, GraphicDisplay display) throws InjectorException
+	public TentacleManager(Log log, NodePool memorymanager, DStarLite dstarlite, Config config, Injector injector, ResearchProfileManager profiles) throws InjectorException
 	{
 		this.injector = injector;
 		this.log = log;
 		this.dstarlite = dstarlite;
-		this.display = display;
 		this.profiles = profiles;
 		
 		for(int i = 0; i < 100; i++)
@@ -74,7 +68,6 @@ public final class TentacleManager implements Iterator<AStarNode>
 		maxLinearAcceleration = config.getDouble(ConfigInfoKraken.MAX_LINEAR_ACCELERATION);
 		deltaSpeedFromStop = Math.sqrt(2 * PRECISION_TRACE * maxLinearAcceleration);
 
-		printObstacles = config.getBoolean(ConfigInfoKraken.GRAPHIC_ROBOT_COLLISION);
 		int nbThreads = config.getInt(ConfigInfoKraken.THREAD_NUMBER);
 		
 		threads = new TentacleThread[nbThreads];
@@ -138,8 +131,6 @@ public final class TentacleManager implements Iterator<AStarNode>
 			for(int i = arcParent.getNbPoints() - 1; i >= 0; i--)
 			{
 				current = arcParent.getPoint(i);
-				if(printObstacles)
-					display.addTemporaryPrintable(current.obstacle.clone(), ColorKraken.ROBOT.color, Layer.BACKGROUND.layer);
 				
 				// vitesse maximale du robot à ce point
 				double maxSpeed = current.possibleSpeed;

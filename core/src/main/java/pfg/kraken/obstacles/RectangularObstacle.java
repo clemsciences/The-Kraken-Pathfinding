@@ -5,12 +5,9 @@
 
 package pfg.kraken.obstacles;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import pfg.graphic.GraphicPanel;
 import pfg.kraken.utils.XY;
 import pfg.kraken.utils.XY_RW;
 
@@ -266,35 +263,6 @@ public class RectangularObstacle extends Obstacle
 		return demieDiagonale;
 	}
 
-	@Override
-	public void print(Graphics g, GraphicPanel f)
-	{
-		int[] X = new int[4];
-		X[0] = (int) coinBasDroiteRotate.getX();
-		X[1] = (int) coinHautDroiteRotate.getX();
-		X[2] = (int) coinHautGaucheRotate.getX();
-		X[3] = (int) coinBasGaucheRotate.getX();
-
-		int[] Y = new int[4];
-		Y[0] = (int) coinBasDroiteRotate.getY();
-		Y[1] = (int) coinHautDroiteRotate.getY();
-		Y[2] = (int) coinHautGaucheRotate.getY();
-		Y[3] = (int) coinBasGaucheRotate.getY();
-
-		for(int i = 0; i < 4; i++)
-		{
-			X[i] = f.XtoWindow(X[i]);
-			Y[i] = f.YtoWindow(Y[i]);
-		}
-		g.drawPolygon(X, Y, 4);
-		
-		Color c = g.getColor();
-		Color cTransparent = new Color(c.getRed(), c.getGreen(), c.getBlue(), 30);
-		g.setColor(cTransparent);
-		
-		g.fillPolygon(X, Y, 4);
-	}
-	
 	@Override
 	public XY[] getExpandedConvexHull(double expansion, double longestAllowedLength)
 	{

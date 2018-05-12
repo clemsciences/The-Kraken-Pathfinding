@@ -6,12 +6,10 @@
 
 package pfg.kraken.obstacles;
 
-import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import pfg.graphic.GraphicPanel;
 import pfg.kraken.utils.XY;
 
 /**
@@ -78,13 +76,6 @@ public class CompoundObstacle extends Obstacle
 				break;
 		}
 		return min;
-	}
-
-	@Override
-	public void print(Graphics g, GraphicPanel f)
-	{
-		for(Obstacle o : obs)
-			o.print(g, f);
 	}
 	
 	@Override

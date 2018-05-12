@@ -17,7 +17,6 @@ import pfg.kraken.robot.CinematiqueObs;
 
 public final class StaticTentacle extends Tentacle
 {
-	private static final long serialVersionUID = -5599092863248049576L;
 	public final CinematiqueObs[] arcselems = new CinematiqueObs[NB_POINTS];
 
 	public StaticTentacle(RectangularObstacle vehicleTemplate)

@@ -5,13 +5,10 @@
 
 package pfg.kraken.robot;
 
-import java.awt.Graphics;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import pfg.graphic.GraphicPanel;
-import pfg.graphic.printable.Printable;
 import pfg.kraken.utils.XY;
 import pfg.kraken.utils.XYO;
 import pfg.kraken.utils.XY_RW;
@@ -23,7 +20,7 @@ import pfg.kraken.utils.XY_RW;
  *
  */
 
-public class Cinematique implements Printable, Serializable
+public class Cinematique implements Serializable
 {
 	private static final long serialVersionUID = 1548985891767047059L;
 	protected final XY_RW position = new XY_RW();
@@ -203,20 +200,6 @@ public class Cinematique implements Printable, Serializable
 		this.orientationGeometrique = orientationGeometrique;
 		this.enMarcheAvant = enMarcheAvant;
 		this.courbureGeometrique = courbureGeometrique;
-	}
-
-	@Override
-	public void print(Graphics g, GraphicPanel f)
-	{
-		double n = 40;
-		XY_RW point1 = new XY_RW(n, 0), point2 = new XY_RW(-n / 2, n / 2), point3 = new XY_RW(-n / 2, -n / 2);
-		point1.rotate(orientationReelle).plus(position);
-		point2.rotate(orientationReelle).plus(position);
-		point3.rotate(orientationReelle).plus(position);
-		int[] X = { f.XtoWindow((int) point1.getX()), f.XtoWindow((int) point2.getX()), f.XtoWindow((int) point3.getX()) };
-		int[] Y = { f.YtoWindow((int) point1.getY()), f.YtoWindow((int) point2.getY()), f.YtoWindow((int) point3.getY()) };
-
-		g.drawPolygon(X, Y, 3);
 	}
 
 	/**

@@ -5,13 +5,10 @@
 
 package pfg.kraken.dstarlite.navmesh;
 
-import java.awt.Graphics;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import pfg.graphic.GraphicPanel;
-import pfg.graphic.printable.Printable;
 import pfg.kraken.utils.XY;
 
 /**
@@ -21,7 +18,7 @@ import pfg.kraken.utils.XY;
  *
  */
 
-public final class NavmeshNode implements Printable, Serializable
+public final class NavmeshNode implements Serializable
 {
 	private static final long serialVersionUID = -6588410126587155794L;
 
@@ -93,13 +90,6 @@ public final class NavmeshNode implements Printable, Serializable
 		return o instanceof NavmeshNode && nb == o.hashCode();
 	}
 	
-	@Override
-	public void print(Graphics g, GraphicPanel f)
-	{
-		int rayon = 15;
-		g.fillOval(f.XtoWindow(position.getX()) - f.distanceXtoWindow(rayon) / 2, f.YtoWindow(position.getY()) - f.distanceYtoWindow(rayon) / 2, f.distanceXtoWindow((int) (rayon)), f.distanceYtoWindow((int) (rayon)));
-	}
-
 	@Override
 	public String toString()
 	{

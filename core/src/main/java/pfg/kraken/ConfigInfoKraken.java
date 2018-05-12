@@ -71,22 +71,6 @@ public enum ConfigInfoKraken implements ConfigInfo
 	NODE_MEMORY_POOL_SIZE(20000),
 	OBSTACLES_MEMORY_POOL_SIZE(50000), // nombre d'instances pour les obstacles
 			
-	/**
-	 * Interface graphique
-	 */
-	GRAPHIC_HEURISTIC(false), // affichage des orientations heuristiques
-								// données par le D* Lite
-	GRAPHIC_ENABLE(false), // désactive tout affichage si faux (empêche le
-							// thread d'affichage de se lancer)
-	GRAPHIC_SERVER(false), // active le serveur d'affichage
-	GRAPHIC_D_STAR_LITE(false), // affiche les calculs du D* Lite
-	GRAPHIC_TENTACLES(false), // affiche les trajectoires temporaires
-	GRAPHIC_FIXED_OBSTACLES(false), // affiche les obstacles fixes
-	GRAPHIC_ROBOT_COLLISION(false), // affiche les obstacles du robot lors de la
-									// vérification des collisions
-//	GRAPHIC_ROBOT_AND_SENSORS(true), // affiche le robot et ses capteurs
-	GRAPHIC_NAVMESH(false), // show the navmesh ?
-
 	ALLOW_BACKWARD_MOTION(true); // allow the pathfinding to find a path with backward motion by default
 
 	private Object defaultValue;

@@ -7,7 +7,6 @@
 package pfg.kraken.obstacles;
 
 import java.io.Serializable;
-import pfg.graphic.printable.Printable;
 import pfg.kraken.utils.XY;
 import pfg.kraken.utils.XY_RW;
 
@@ -18,7 +17,7 @@ import pfg.kraken.utils.XY_RW;
  *
  */
 
-public abstract class Obstacle implements Printable, Serializable
+public abstract class Obstacle implements Serializable
 {
 	private static final long serialVersionUID = -2508727703931042322L;
 	protected XY_RW position;

@@ -5,7 +5,6 @@
 
 package pfg.kraken.dstarlite.navmesh;
 
-import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -15,10 +14,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import pfg.graphic.GraphicDisplay;
-import pfg.graphic.printable.Layer;
-import pfg.kraken.ColorKraken;
-
 /**
  * The mesh itself
  * @author pf
@@ -27,7 +22,7 @@ import pfg.kraken.ColorKraken;
 
 public final class TriangulatedMesh implements Serializable
 {
-	private static final long serialVersionUID = 5706228066190218520L;
+	private static final long serialVersionUID = 1L;
 	public final int obsHashCode;
 	public final NavmeshNode[] nodes;
 	public final NavmeshEdge[] edges;
@@ -78,15 +73,5 @@ public final class TriangulatedMesh implements Serializable
 		for(int i = 0; i < triangles.length; i++)
 			out += triangles[i].toString()+"\n";
 		return out;
-	}
-
-	public void addToBuffer(GraphicDisplay buffer)
-	{
-		for(NavmeshTriangle t : triangles)
-			buffer.addPrintable(t, ColorKraken.NAVMESH_TRIANGLE.color, Layer.BACKGROUND.layer);
-		for(NavmeshEdge e : edges)
-			buffer.addPrintable(e, ColorKraken.NAVMESH.color, Layer.BACKGROUND.layer);
-		for(NavmeshNode n : nodes)
-			buffer.addPrintable(n, Color.BLACK, Layer.BACKGROUND.layer);
 	}
 }

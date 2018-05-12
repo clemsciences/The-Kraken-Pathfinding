@@ -5,7 +5,6 @@
 
 package pfg.kraken.astar;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -13,8 +12,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 import pfg.config.Config;
-import pfg.graphic.GraphicDisplay;
-import pfg.graphic.printable.Layer;
 import pfg.kraken.ConfigInfoKraken;
 import pfg.kraken.LogCategoryKraken;
 import pfg.kraken.astar.autoreplanning.DynamicPath;
@@ -65,11 +62,6 @@ public final class TentacularAStar
 	 */
 	private NodePool memorymanager;
 	
-	/*
-	 * Graphic display
-	 */
-	private GraphicDisplay buffer;
-	
 	private PhysicsEngine engine;
 	
 	/*
@@ -94,11 +86,6 @@ public final class TentacularAStar
 	 */
 	private DynamicPath chemin;
 	
-	/*
-	 * Graphic parameters
-	 */
-	private boolean graphicTrajectory;
-
 	/*
 	 * Duration before timeout
 	 */
@@ -171,7 +158,7 @@ public final class TentacularAStar
 	/**
 	 * Constructeur du AStarCourbe
 	 */
-	public TentacularAStar(Log log, PhysicsEngine engine, DynamicPath defaultChemin, DStarLite dstarlite, TentacleManager arcmanager, NodePool memorymanager, CinemObsPool rectMemory, GraphicDisplay buffer, RobotState chrono, Config config, RectangularObstacle vehicleTemplate)
+	public TentacularAStar(Log log, PhysicsEngine engine, DynamicPath defaultChemin, DStarLite dstarlite, TentacleManager arcmanager, NodePool memorymanager, CinemObsPool rectMemory, RobotState chrono, Config config, RectangularObstacle vehicleTemplate)
 	{
 		this.engine = engine;
 		this.chemin = defaultChemin;
@@ -180,8 +167,6 @@ public final class TentacularAStar
 		this.memorymanager = memorymanager;
 		this.dstarlite = dstarlite;
 		this.cinemMemory = rectMemory;
-		this.buffer = buffer;
-		graphicTrajectory = config.getBoolean(ConfigInfoKraken.GRAPHIC_TENTACLES);
 		debugMode = config.getBoolean(ConfigInfoKraken.ENABLE_DEBUG_MODE);
 		fastMode = config.getBoolean(ConfigInfoKraken.FAST_AND_DIRTY);
 		checkEachIteration = config.getBoolean(ConfigInfoKraken.CHECK_NEW_OBSTACLES);
@@ -365,17 +350,6 @@ public final class TentacularAStar
 				continue; // collision mécanique attendue. On passe au suivant !
 			}
 
-			// affichage
-			if(graphicTrajectory && current.getArc() != null)
-			{
-				buffer.addTemporaryPrintable(current, current.getArc().vitesse.getColor(), Layer.MIDDLE.layer);
-				if(current.parent != null)
-				{
-					buffer.addTemporaryPrintable(current.parent, Color.ORANGE, Layer.FOREGROUND.layer);
-					assert current.parent == depart || current.parent.getArc().getNbPoints() > 0;
-				}
-			}
-
 			// Si current est la trajectoire de secours, ça veut dire que cette
 			// trajectoire de secours est la meilleure possible, donc on a fini
 			if(current == trajetDeSecours)
@@ -475,26 +449,12 @@ public final class TentacularAStar
 				if(debugMode)
 				{
 					outTentacles.add(successeur);
-					buffer.addTemporaryPrintable(successeur, Color.BLUE, Layer.FOREGROUND.layer);
 				}
 
 				openset.add(successeur);
 				assert setState(successeur, MemPoolState.WAITING);
 			}
 			
-			if(debugMode)
-			{
-				buffer.refresh();
-				try {
-					Thread.sleep(200);
-				} catch (InterruptedException e) {
-					Thread.currentThread().interrupt();
-				}
-				for(AStarNode n : outTentacles)
-					buffer.removePrintable(n);
-				buffer.refresh();
-			}
-
 			assert setState(current, MemPoolState.STANDBY);
 		} while(!openset.isEmpty());
 

@@ -4,7 +4,7 @@
 
   <groupId>pfg.kraken</groupId>
   <artifactId>kraken</artifactId>
-  <version>1.4.2</version>
+  <version>1.4.3-SNAPSHOT</version>
 
   <packaging>jar</packaging>
 
@@ -72,12 +72,6 @@
       <groupId>pfg.log</groupId>
       <artifactId>log</artifactId>
       <version>1.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>pfg.graphic</groupId>
-      <artifactId>graphic-toolbox</artifactId>
-      <version>1.2-SNAPSHOT</version>
     </dependency>
 
     <dependency>

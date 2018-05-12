@@ -9,10 +9,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import pfg.config.Config;
-import pfg.graphic.GraphicDisplay;
-import pfg.graphic.printable.Layer;
-import pfg.kraken.ColorKraken;
-import pfg.kraken.ConfigInfoKraken;
 import pfg.kraken.dstarlite.navmesh.Navmesh;
 import pfg.kraken.dstarlite.navmesh.NavmeshEdge;
 import pfg.kraken.dstarlite.navmesh.NavmeshNode;
@@ -41,7 +37,6 @@ public final class DStarLite
 {
 	protected Log log;
 	private Navmesh navmesh;
-	private boolean graphicHeuristique;
 	private DynamicObstacles dynObs;
 	private StaticObstacles statObs;
 	private XY positionArrivee;
@@ -54,9 +49,7 @@ public final class DStarLite
 
 	private EnhancedPriorityQueue openset;
 	private DStarLiteNode arrivee;
-	private GraphicDisplay buffer;
 	private long nbPF = 0;
-	private boolean printItineraire;
 
 	private Cle knew = new Cle();
 	private Cle kold = new Cle();
@@ -68,11 +61,10 @@ public final class DStarLite
 	 * @param log
 	 * @param gridspace
 	 */
-	public DStarLite(Log log, Navmesh navmesh, GraphicDisplay buffer, Config config, DynamicObstacles dynObs, StaticObstacles statObs)
+	public DStarLite(Log log, Navmesh navmesh, Config config, DynamicObstacles dynObs, StaticObstacles statObs)
 	{
 		this.log = log;
 		this.navmesh = navmesh;
-		this.buffer = buffer;
 		this.dynObs = dynObs;
 		this.statObs = statObs;
 		
@@ -82,9 +74,6 @@ public final class DStarLite
 		memory = new DStarLiteNode[nbPoints];
 		for(int i = 0; i < nbPoints; i++)
 			memory[i] = new DStarLiteNode(navmesh.mesh.nodes[i]);
-
-		graphicHeuristique = config.getBoolean(ConfigInfoKraken.GRAPHIC_HEURISTIC);
-		printItineraire = config.getBoolean(ConfigInfoKraken.GRAPHIC_D_STAR_LITE);
 	}
 
 	/**
@@ -395,7 +384,6 @@ public final class DStarLite
 			coutMin = Integer.MAX_VALUE;
 
 			int nbNeighbours = node.node.getNbNeighbours();
-			int indexMin = -1;
 			min = null;
 			for(int i = 0; i < nbNeighbours; i++)
 			{
@@ -405,14 +393,10 @@ public final class DStarLite
 				{
 					coutMin = coutTmp;
 					min = s;
-					indexMin = i;
 				}
 			}
 			
 			assert min.g < node.g : "The distance to the goal increased !";
-
-			if(printItineraire)
-				node.node.getNeighbourEdge(indexMin).highlight(true);
 			
 			node = min;
 		}
@@ -528,8 +512,6 @@ public final class DStarLite
 				double mean = (2 * Math.PI + angle2 + (diff / 2 )) % (2 * Math.PI);
 				n.heuristiqueOrientation = mean;
 			}
-			if(graphicHeuristique)
-				buffer.addTemporaryPrintable(n, ColorKraken.HEURISTIQUE.color, Layer.MIDDLE.layer);
 		}
 	}
 

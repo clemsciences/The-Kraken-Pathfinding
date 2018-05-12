@@ -5,10 +5,6 @@
 
 package pfg.kraken.astar;
 
-import java.awt.Graphics;
-
-import pfg.graphic.GraphicPanel;
-import pfg.graphic.printable.Printable;
 import pfg.kraken.astar.tentacles.DynamicTentacle;
 import pfg.kraken.astar.tentacles.StaticTentacle;
 import pfg.kraken.astar.tentacles.Tentacle;
@@ -24,9 +20,8 @@ import pfg.kraken.robot.RobotState;
  *
  */
 
-public final class AStarNode implements Memorizable, Printable
+public final class AStarNode implements Memorizable
 {
-	private static final long serialVersionUID = -2120732124823178009L;
 	public RobotState robot; // the cinematic state + the duration since the beginning of the search
 	public int g_score; // distance du point de départ à ce point
 	public int f_score; // g_score + heuristique = meilleure distance qu'on
@@ -112,14 +107,6 @@ public final class AStarNode implements Memorizable, Printable
 	public int getIndiceMemoryManager()
 	{
 		return indiceMemoryManager;
-	}
-
-	@Override
-	public void print(Graphics g, GraphicPanel f)
-	{
-		Tentacle a = getArc();
-		if(a != null)
-			a.print(g, f);
 	}
 	
 	private volatile MemPoolState state = MemPoolState.FREE;

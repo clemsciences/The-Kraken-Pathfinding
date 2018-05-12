@@ -7,10 +7,14 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import pfg.config.ConfigInfo;
+import pfg.graphic.DebugTool;
 import pfg.graphic.GraphicDisplay;
+import pfg.graphic.Vec2RO;
 import pfg.graphic.printable.Layer;
 import pfg.kraken.Kraken;
 import pfg.kraken.SearchParameters;
+import pfg.kraken.SeverityCategoryKraken;
 import pfg.kraken.exceptions.PathfindingException;
 import pfg.kraken.obstacles.CircularObstacle;
 import pfg.kraken.obstacles.Obstacle;
@@ -73,7 +77,8 @@ public class Example1
 		/*
 		 * The graphic display (optional)
 		 */
-		GraphicDisplay display = kraken.getGraphicDisplay();
+		DebugTool debug = DebugTool.getDebugTool(new Vec2RO(0, 1000), SeverityCategoryKraken.INFO, "kraken-examples.conf", "");
+		GraphicDisplay display = debug.getGraphicDisplay();
 
 		try
 		{

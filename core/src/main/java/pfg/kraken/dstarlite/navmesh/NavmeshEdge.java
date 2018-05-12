@@ -5,15 +5,11 @@
 
 package pfg.kraken.dstarlite.navmesh;
 
-import java.awt.Graphics;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import pfg.graphic.GraphicPanel;
-import pfg.graphic.printable.Printable;
-import pfg.kraken.ColorKraken;
 import pfg.kraken.obstacles.Obstacle;
 import pfg.kraken.utils.XY;
 import pfg.kraken.utils.XY_RW;
@@ -25,7 +21,7 @@ import pfg.kraken.utils.XY_RW;
  *
  */
 
-public final class NavmeshEdge implements Serializable, Printable
+public final class NavmeshEdge implements Serializable
 {
 	private static final long serialVersionUID = 7904466980326128967L;
 	int length;
@@ -35,7 +31,6 @@ public final class NavmeshEdge implements Serializable, Printable
 	public final int[] pointsNb = new int[2];
 	final transient NavmeshTriangle[] triangles = new NavmeshTriangle[2]; // transient because it is used only at the building of the navmesh
 	int nbTriangles = 0;
-	private boolean highlight = false;
 	final List<Obstacle> obstructingObstacles = new ArrayList<Obstacle>();
 	
 	public void prepareToSave()
@@ -402,21 +397,6 @@ public final class NavmeshEdge implements Serializable, Printable
 		return !obstructingObstacles.isEmpty();
 	}
 
-	@Override
-	public void print(Graphics g, GraphicPanel f)
-	{
-		if(highlight)
-			g.setColor(ColorKraken.RED.color);
-		else if(isBlocked())
-			g.setColor(ColorKraken.NAVMESH_BLOCKED.color);
-		g.drawLine(f.XtoWindow(points[0].position.getX()), f.YtoWindow(points[0].position.getY()), f.XtoWindow(points[1].position.getX()), f.YtoWindow(points[1].position.getY()));
-	}
-
-	public void highlight(boolean state)
-	{
-		highlight = state;
-	}
-	
 	public boolean isAdjacent(NavmeshEdge other)
 	{
 		for(int i = 0; i < 2; i++)
