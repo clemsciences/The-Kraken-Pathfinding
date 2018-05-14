@@ -8,7 +8,6 @@ package pfg.kraken;
 import java.util.ArrayList;
 import java.util.List;
 import pfg.config.Config;
-import pfg.log.Log;
 import pfg.injector.Injector;
 import pfg.injector.InjectorException;
 import pfg.kraken.astar.TentacularAStar;
@@ -103,9 +102,6 @@ public final class Kraken
 					so.add(o);
 			so.setCorners(bottomLeftCorner, topRightCorner);
 
-			Log log = new Log(SeverityCategoryKraken.INFO, configfile, configprofile);
-
-			injector.addService(log);
 			injector.addService(config);
 			injector.addService(DynamicObstacles.class, dynObs);		
 			injector.addService(this);

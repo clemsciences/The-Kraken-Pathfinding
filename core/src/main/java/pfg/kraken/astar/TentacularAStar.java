@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.PriorityQueue;
 import pfg.config.Config;
 import pfg.kraken.ConfigInfoKraken;
-import pfg.kraken.LogCategoryKraken;
 import pfg.kraken.astar.autoreplanning.DynamicPath;
 import pfg.kraken.astar.engine.PhysicsEngine;
 import pfg.kraken.astar.tentacles.TentacleManager;
@@ -33,7 +32,6 @@ import pfg.kraken.robot.CinematiqueObs;
 import pfg.kraken.robot.ItineraryPoint;
 import pfg.kraken.robot.RobotState;
 import pfg.kraken.utils.XY;
-import pfg.log.Log;
 
 /**
  * A* qui utilise le D* Lite comme heuristique pour fournir une trajectoire
@@ -45,7 +43,6 @@ import pfg.log.Log;
 
 public final class TentacularAStar
 {
-	protected Log log;
 	
 	/*
 	 * Gives the neighbours
@@ -158,11 +155,10 @@ public final class TentacularAStar
 	/**
 	 * Constructeur du AStarCourbe
 	 */
-	public TentacularAStar(Log log, PhysicsEngine engine, DynamicPath defaultChemin, DStarLite dstarlite, TentacleManager arcmanager, NodePool memorymanager, CinemObsPool rectMemory, RobotState chrono, Config config, RectangularObstacle vehicleTemplate)
+	public TentacularAStar(PhysicsEngine engine, DynamicPath defaultChemin, DStarLite dstarlite, TentacleManager arcmanager, NodePool memorymanager, CinemObsPool rectMemory, RobotState chrono, Config config, RectangularObstacle vehicleTemplate)
 	{
 		this.engine = engine;
 		this.chemin = defaultChemin;
-		this.log = log;
 		this.arcmanager = arcmanager;
 		this.memorymanager = memorymanager;
 		this.dstarlite = dstarlite;
@@ -190,7 +186,6 @@ public final class TentacularAStar
 	public List<ItineraryPoint> searchWithoutReplanning() throws PathfindingException
 	{
 		chemin.initSearchWithoutPlanning();
-		log.write("Path search begins.", LogCategoryKraken.PF);
 		search();
 		return chemin.endSearchWithoutPlanning();
 	}
@@ -225,13 +220,11 @@ public final class TentacularAStar
 		checkAfterInitialization(initialPath);
 		
 		chemin.importPath(initialPath);
-		log.write("Path search with autoreplanning begins.", LogCategoryKraken.PF);
 	}
 	
 	public void searchWithReplanning() throws PathfindingException
 	{
 		chemin.setSearchInProgress();
-		log.write("Path search with autoreplanning begins.", LogCategoryKraken.PF);
 		search();
 	}
 	
@@ -294,7 +287,6 @@ public final class TentacularAStar
 					// On vérifie régulièrement qu'il ne faut pas fournir un chemin partiel
 					if(margeDemandee > 0)
 					{
-						log.write("Partial rebuild required !", LogCategoryKraken.PF);
 						partialReconstruct(current, chemin, margeDemandee, true);
 						
 						if(chemin.margeSupplementaireDemandee() > 0) // toujours pas assez de marge : on doit arrêter
@@ -379,7 +371,6 @@ public final class TentacularAStar
 				cinemMemory.empty();
 				if(trajetDeSecours != null) // si on a un trajet de secours, on l'utilise
 				{
-					log.write("The backup path is used.", LogCategoryKraken.PF);
 					partialReconstruct(trajetDeSecours, chemin, Integer.MAX_VALUE, false);
 					return;
 				}
@@ -434,7 +425,6 @@ public final class TentacularAStar
 					trajetDeSecours = successeur;
 					if(fastMode)
 					{
-						log.write("A fast-and-dirty path is used.", LogCategoryKraken.PF);
 						partialReconstruct(trajetDeSecours, chemin, Integer.MAX_VALUE, false);
 						memorymanager.empty();
 						cinemMemory.empty();
@@ -486,9 +476,6 @@ public final class TentacularAStar
 		
 		assert trajectory.size() <= nbPointsMax : trajectory.size()+" "+nbPointsMax;
 		chemin.addToEnd(trajectory, partial);
-		
-		
-		log.write("Research completed.", LogCategoryKraken.PF);
 	}
 	
 	/**
@@ -546,8 +533,6 @@ public final class TentacularAStar
 		if(!chemin.needReplanning())
 			return;
 		
-		log.write("Replanning started.", LogCategoryKraken.REPLANIF);
-
 		depart.init();
 		depart.robot.setCinematique(lastValid);
 

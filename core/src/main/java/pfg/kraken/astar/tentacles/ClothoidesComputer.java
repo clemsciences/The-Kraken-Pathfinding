@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import pfg.config.Config;
 import pfg.kraken.ConfigInfoKraken;
-import pfg.kraken.LogCategoryKraken;
-import pfg.kraken.SeverityCategoryKraken;
 import pfg.kraken.astar.AStarNode;
 import pfg.kraken.astar.tentacles.types.ClothoTentacle;
 import pfg.kraken.astar.tentacles.types.StraightingTentacle;
@@ -29,7 +27,6 @@ import pfg.kraken.robot.Cinematique;
 import pfg.kraken.robot.CinematiqueObs;
 import pfg.kraken.utils.XY;
 import pfg.kraken.utils.XY_RW;
-import pfg.log.Log;
 import static pfg.kraken.astar.tentacles.Tentacle.*;
 
 /**
@@ -41,7 +38,6 @@ import static pfg.kraken.astar.tentacles.Tentacle.*;
 
 public final class ClothoidesComputer implements TentacleComputer
 {
-	private Log log;
 	private CinemObsPool memory;
 	private double rootedMaxAcceleration;
 	
@@ -57,10 +53,9 @@ public final class ClothoidesComputer implements TentacleComputer
 	private XY_RW[] delta;
 	private XY_RW[] centreCercle;
 	
-	public ClothoidesComputer(Log log, Config config, CinemObsPool memory)
+	public ClothoidesComputer(Config config, CinemObsPool memory)
 	{
 		this.memory = memory;
-		this.log = log;
 		rootedMaxAcceleration = Math.sqrt(config.getDouble(ConfigInfoKraken.MAX_LATERAL_ACCELERATION));
 		int indexThreadMax = config.getInt(ConfigInfoKraken.THREAD_NUMBER);
 		tmp = new XY_RW[indexThreadMax];
@@ -147,7 +142,6 @@ public final class ClothoidesComputer implements TentacleComputer
 	private void init()
 	{
 		PosBigDecimal out = new PosBigDecimal();
-		log.write("Computation of the unitary clothoid, please wait (it should take at most one minute). This computation is made once and for all.", LogCategoryKraken.PF);
 		for(int s = 0; s < 2 * INDICE_MAX - 1; s++)
 		{
 			calculeXY(new BigDecimal((s - INDICE_MAX + 1) * PRECISION_TRACE).setScale(15, RoundingMode.HALF_EVEN), out);
@@ -233,9 +227,6 @@ public final class ClothoidesComputer implements TentacleComputer
 																						// un
 																						// arrondi
 
-		if(pointDepart < 0 || pointDepart >= trajectoire.length)
-			log.write("Sorti de la clothoïde précalculée !", SeverityCategoryKraken.CRITICAL, LogCategoryKraken.PF);
-
 		double orientationClothoDepart = sDepart * sDepart; // orientation au
 															// départ
 		if(!vitesse.positif)
@@ -297,9 +288,6 @@ public final class ClothoidesComputer implements TentacleComputer
 																						// ici
 																						// un
 																						// arrondi
-
-		if(pointDepart < 0 || pointDepart >= trajectoire.length)
-			log.write("Sorti de la clothoïde précalculée !", SeverityCategoryKraken.CRITICAL, LogCategoryKraken.PF);
 
 		double orientationClothoDepart = sDepart * sDepart; // orientation au
 															// départ
@@ -438,7 +426,6 @@ public final class ClothoidesComputer implements TentacleComputer
 	 */
 	private void sauvegardePoints()
 	{
-		log.write("Sauvegarde des points de la clothoïde unitaire", LogCategoryKraken.PF);
 		try
 		{
 			FileOutputStream fichier;
@@ -453,7 +440,6 @@ public final class ClothoidesComputer implements TentacleComputer
 		}
 		catch(IOException e)
 		{
-			log.write("Erreur lors de la sauvegarde des points de la clothoïde ! " + e, SeverityCategoryKraken.CRITICAL, LogCategoryKraken.PF);
 		}
 	}
 
@@ -464,7 +450,6 @@ public final class ClothoidesComputer implements TentacleComputer
 	 */
 	private boolean chargePoints()
 	{
-		log.write("Clothoid points loaded.",LogCategoryKraken.PF);
 		try
 		{
 			InputStream fichier = getClass().getResourceAsStream("/clotho-"+S_MAX+".krk");
@@ -484,7 +469,6 @@ public final class ClothoidesComputer implements TentacleComputer
 			}
 			catch(IOException | ClassNotFoundException e1)
 			{
-				log.write("Chargement échoué ! "+e1.getMessage(), SeverityCategoryKraken.CRITICAL, LogCategoryKraken.PF);
 			}
 		}
 		return false;

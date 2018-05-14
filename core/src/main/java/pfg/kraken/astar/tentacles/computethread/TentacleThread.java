@@ -10,7 +10,6 @@ import static pfg.kraken.astar.tentacles.Tentacle.PRECISION_TRACE;
 import java.util.concurrent.BlockingQueue;
 
 import pfg.config.Config;
-import pfg.log.Log;
 import pfg.kraken.ConfigInfoKraken;
 import pfg.kraken.astar.AStarNode;
 import pfg.kraken.memory.NodePool;
@@ -24,7 +23,6 @@ import pfg.kraken.memory.NodePool;
 
 public final class TentacleThread extends Thread
 {
-	protected Log log;
 	private NodePool memorymanager;
 	private double maxLinearAcceleration;
 	private int tempsArret;
@@ -34,9 +32,8 @@ public final class TentacleThread extends Thread
 	public final BlockingQueue<AStarNode> successeurs;
 	public final static AStarNode placeholder = new AStarNode();
 	
-	public TentacleThread(Log log, Config config, NodePool memorymanager, int nb, BlockingQueue<AStarNode> successeurs, BlockingQueue<TentacleTask> buffer)
+	public TentacleThread(Config config, NodePool memorymanager, int nb, BlockingQueue<AStarNode> successeurs, BlockingQueue<TentacleTask> buffer)
 	{
-		this.log = log;
 		this.buffer = buffer;
 		this.successeurs = successeurs;
 		this.memorymanager = memorymanager;

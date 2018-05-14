@@ -7,10 +7,7 @@ package pfg.kraken.dstarlite.navmesh;
 
 import pfg.config.Config;
 import pfg.kraken.utils.XY;
-import pfg.log.Log;
 import pfg.kraken.ConfigInfoKraken;
-import pfg.kraken.LogCategoryKraken;
-import pfg.kraken.SeverityCategoryKraken;
 import pfg.kraken.obstacles.container.StaticObstacles;
 
 import java.io.IOException;
@@ -25,15 +22,12 @@ import java.io.IOException;
 
 public final class Navmesh
 {
-	protected Log log;
 	public TriangulatedMesh mesh;
 	
-	public Navmesh(Log log, Config config, StaticObstacles obs, NavmeshComputer computer)
+	public Navmesh(Config config, StaticObstacles obs, NavmeshComputer computer)
 	{
-		this.log = log;
 		String filename = config.getString(ConfigInfoKraken.NAVMESH_FILENAME);
 		try {
-			log.write("D* NavMesh loading…", LogCategoryKraken.PF);
 			mesh = TriangulatedMesh.loadNavMesh(filename);
 			if(mesh.obsHashCode != obs.hashCode())
 				throw new NullPointerException("different obstacles ("+mesh.obsHashCode+" != "+obs.hashCode()+")"); // l'objectif est juste d'entrer dans le catch ci-dessous…
@@ -42,15 +36,12 @@ public final class Navmesh
 		}
 		catch(IOException | ClassNotFoundException | NullPointerException e)
 		{
-			log.write("The navmesh can't be loaded ("+e.getMessage()+") : generation of a new one.", SeverityCategoryKraken.WARNING, LogCategoryKraken.PF);
 			mesh = computer.generateNavMesh(obs);
 			try {
 				mesh.saveNavMesh(filename);
-				log.write("Navmesh saved into "+filename, LogCategoryKraken.PF);
 			}
 			catch(IOException e1)
 			{
-				log.write("Error during navmesh save ! " + e1, SeverityCategoryKraken.CRITICAL, LogCategoryKraken.PF);
 			}
 		}
 		assert mesh != null;

@@ -26,7 +26,6 @@ import pfg.kraken.memory.NodePool;
 import pfg.kraken.robot.Cinematique;
 import pfg.kraken.robot.CinematiqueObs;
 import pfg.kraken.utils.XYO;
-import pfg.log.Log;
 import static pfg.kraken.astar.tentacles.Tentacle.*;
 
 /**
@@ -38,7 +37,6 @@ import static pfg.kraken.astar.tentacles.Tentacle.*;
 
 public final class TentacleManager implements Iterator<AStarNode>
 {
-	protected Log log;
 	private DStarLite dstarlite;
 	private double courbureMax, maxLinearAcceleration, vitesseMax;
 	private Injector injector;
@@ -55,10 +53,9 @@ public final class TentacleManager implements Iterator<AStarNode>
 	
 	private int nbLeft;
 	
-	public TentacleManager(Log log, NodePool memorymanager, DStarLite dstarlite, Config config, Injector injector, ResearchProfileManager profiles) throws InjectorException
+	public TentacleManager(NodePool memorymanager, DStarLite dstarlite, Config config, Injector injector, ResearchProfileManager profiles) throws InjectorException
 	{
 		this.injector = injector;
-		this.log = log;
 		this.dstarlite = dstarlite;
 		this.profiles = profiles;
 		
@@ -73,7 +70,7 @@ public final class TentacleManager implements Iterator<AStarNode>
 		threads = new TentacleThread[nbThreads];
 		for(int i = 0; i < nbThreads; i++)
 		{
-			threads[i] = new TentacleThread(log, config, memorymanager, i, successeurs, buffer);
+			threads[i] = new TentacleThread(config, memorymanager, i, successeurs, buffer);
 			if(nbThreads != 1)
 				threads[i].start();
 		}
