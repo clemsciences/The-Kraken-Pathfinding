@@ -3,12 +3,9 @@
  * Distributed under the MIT License.
  */
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import pfg.graphic.GraphicDisplay;
-import pfg.graphic.printable.Layer;
 import pfg.kraken.Kraken;
 import pfg.kraken.SearchParameters;
 import pfg.kraken.astar.autoreplanning.DynamicPath;
@@ -17,7 +14,6 @@ import pfg.kraken.obstacles.CircularObstacle;
 import pfg.kraken.obstacles.Obstacle;
 import pfg.kraken.obstacles.RectangularObstacle;
 import pfg.kraken.obstacles.container.DefaultDynamicObstacles;
-import pfg.kraken.robot.ItineraryPoint;
 import pfg.kraken.exceptions.PathfindingException;
 import pfg.kraken.utils.XY;
 import pfg.kraken.utils.XYO;
@@ -52,7 +48,6 @@ public class Example6
 		DefaultDynamicObstacles obsDyn = new DefaultDynamicObstacles();
 
 		Kraken kraken = new Kraken(robot, obs, obsDyn, new XY(-1500,0), new XY(1500, 2000), "kraken-examples.conf", "trajectory");
-		GraphicDisplay display = kraken.getGraphicDisplay();
 
 		try
 		{
@@ -69,18 +64,14 @@ public class Example6
 			 */
 			do {
 				diff = dpath.waitDiff();
-				for(ItineraryPoint p : diff.diff)
-					display.addTemporaryPrintable(p, Color.BLACK, Layer.FOREGROUND.layer);
 			} while(!diff.isComplete);
 
 			Thread.sleep(2000);
-			display.clearTemporaryPrintables();
 			
 			/*
 			 * The research is continuous : at the moment a new obstacle is added, Kraken tries to find a new path
 			 */
 			Obstacle newObs1 = new CircularObstacle(new XY(400,800), 100);
-			display.addTemporaryPrintable(newObs1, Color.BLUE, Layer.MIDDLE.layer);
 			obsDyn.add(newObs1);
 			
 			/*
@@ -88,25 +79,18 @@ public class Example6
 			 */
 			do {
 				diff = dpath.waitDiff();
-				for(ItineraryPoint p : diff.diff)
-					display.addTemporaryPrintable(p, Color.BLACK, Layer.FOREGROUND.layer);
 			} while(!diff.isComplete);
 			
 			Thread.sleep(2000);
-			display.clearTemporaryPrintables();
 
 			/*
 			 * We add a second obstacle
 			 */
 			Obstacle newObs2 = new CircularObstacle(new XY(100,1200), 100);
-			display.addTemporaryPrintable(newObs1, Color.BLUE, Layer.MIDDLE.layer);
-			display.addTemporaryPrintable(newObs2, Color.BLUE, Layer.MIDDLE.layer);
 			obsDyn.add(newObs2);
 			
 			do {
 				diff = dpath.waitDiff();
-				for(ItineraryPoint p : diff.diff)
-					display.addTemporaryPrintable(p, Color.BLACK, Layer.FOREGROUND.layer);
 			} while(!diff.isComplete);
 			
 			/*

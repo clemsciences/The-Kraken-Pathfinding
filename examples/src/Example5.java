@@ -3,12 +3,9 @@
  * Distributed under the MIT License.
  */
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import pfg.graphic.GraphicDisplay;
-import pfg.graphic.printable.Layer;
 import pfg.kraken.Kraken;
 import pfg.kraken.SearchParameters;
 import pfg.kraken.astar.autoreplanning.DynamicPath;
@@ -16,7 +13,6 @@ import pfg.kraken.obstacles.CircularObstacle;
 import pfg.kraken.obstacles.Obstacle;
 import pfg.kraken.obstacles.RectangularObstacle;
 import pfg.kraken.obstacles.container.DefaultDynamicObstacles;
-import pfg.kraken.robot.ItineraryPoint;
 import pfg.kraken.exceptions.PathfindingException;
 import pfg.kraken.utils.XY;
 import pfg.kraken.utils.XYO;
@@ -51,7 +47,6 @@ public class Example5
 		DefaultDynamicObstacles obsDyn = new DefaultDynamicObstacles();
 
 		Kraken kraken = new Kraken(robot, obs, obsDyn, new XY(-1500,0), new XY(1500, 2000), "kraken-examples.conf", "trajectory");
-		GraphicDisplay display = kraken.getGraphicDisplay();
 
 		try
 		{
@@ -61,49 +56,34 @@ public class Example5
 			 */
 			DynamicPath dpath = kraken.enableAutoReplanning();
 			kraken.startContinuousSearch(new SearchParameters(new XYO(0, 200, 0), new XY(1000, 1000)));
-			List<ItineraryPoint> path;
 			
 			/*
 			 * The research part. We wait for dpath until a new path is available
 			 */
-			path = dpath.waitNewPath();
+			dpath.waitNewPath();
 			
-			for(ItineraryPoint p : path)
-				display.addTemporaryPrintable(p, Color.BLACK, Layer.FOREGROUND.layer);
-
 			Thread.sleep(2000);
-			display.clearTemporaryPrintables();
 			
 			/*
 			 * The research is continuous : at the moment a new obstacle is added, Kraken tries to find a new path
 			 */
 			Obstacle newObs1 = new CircularObstacle(new XY(400,800), 100);
-			display.addTemporaryPrintable(newObs1, Color.BLUE, Layer.MIDDLE.layer);
 			obsDyn.add(newObs1);
 			
 			/*
 			 * We wait the new path
 			 */
-			path = dpath.waitNewPath();
-			
-			for(ItineraryPoint p : path)
-				display.addTemporaryPrintable(p, Color.BLACK, Layer.FOREGROUND.layer);
+			dpath.waitNewPath();
 			
 			Thread.sleep(2000);
-			display.clearTemporaryPrintables();
 			
 			/*
 			 * We add a second obstacle
 			 */
 			Obstacle newObs2 = new CircularObstacle(new XY(100,1200), 100);
-			display.addTemporaryPrintable(newObs1, Color.BLUE, Layer.MIDDLE.layer);
-			display.addTemporaryPrintable(newObs2, Color.BLUE, Layer.MIDDLE.layer);
 			obsDyn.add(newObs2);
 			
-			path = dpath.waitNewPath();
-			
-			for(ItineraryPoint p : path)
-				display.addTemporaryPrintable(p, Color.BLACK, Layer.FOREGROUND.layer);
+			dpath.waitNewPath();
 			
 			/*
 			 * When the continuous search isn't needed anymore, we can stop it.

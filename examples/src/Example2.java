@@ -3,12 +3,9 @@
  * Distributed under the MIT License.
  */
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import pfg.graphic.GraphicDisplay;
-import pfg.graphic.printable.Layer;
 import pfg.kraken.Kraken;
 import pfg.kraken.SearchParameters;
 import pfg.kraken.obstacles.CircularObstacle;
@@ -50,7 +47,7 @@ public class Example2
 		DefaultDynamicObstacles obsDyn = new DefaultDynamicObstacles();
 
 		Kraken kraken = new Kraken(robot, obs, obsDyn, new XY(-1500,0), new XY(1500, 2000), "kraken-examples.conf", "trajectory"/*, "detailed"*/);
-		GraphicDisplay display = kraken.getGraphicDisplay();
+//		GraphicDisplay display = kraken.getGraphicDisplay();
 
 		try
 		{
@@ -63,10 +60,10 @@ public class Example2
 			System.out.println("\nFirst search :");
 			for(ItineraryPoint p : path)
 			{
-				display.addTemporaryPrintable(p, Color.BLACK, Layer.FOREGROUND.layer);
+//				display.addTemporaryPrintable(p, Color.BLACK, Layer.FOREGROUND.layer);
 				System.out.println(p);
 			}
-			display.refresh();
+//			display.refresh();
 			
 			/*
 			 * Just a sleep to see clearly the different steps
@@ -81,17 +78,17 @@ public class Example2
 			}
 
 			// Let's clear the previous trajectory
-			display.clearTemporaryPrintables();
+//			display.clearTemporaryPrintables();
 
 			// We add a dynamic obstacle
 			Obstacle newObs1 = new CircularObstacle(new XY(200,600), 200);
 			Obstacle newObs2 = new RectangularObstacle(new XY(1200,1500), 100, 100);
 			Obstacle newObs3 = new CircularObstacle(new XY(0,1200), 100);
 			Obstacle newObs4 = new CircularObstacle(new XY(-900,600), 400);
-			display.addTemporaryPrintable(newObs1, Color.BLUE, Layer.MIDDLE.layer);
-			display.addTemporaryPrintable(newObs2, Color.BLUE, Layer.MIDDLE.layer);
-			display.addTemporaryPrintable(newObs3, Color.BLUE, Layer.MIDDLE.layer);
-			display.addTemporaryPrintable(newObs4, Color.BLUE, Layer.MIDDLE.layer);
+//			display.addTemporaryPrintable(newObs1, Color.BLUE, Layer.MIDDLE.layer);
+//			display.addTemporaryPrintable(newObs2, Color.BLUE, Layer.MIDDLE.layer);
+//			display.addTemporaryPrintable(newObs3, Color.BLUE, Layer.MIDDLE.layer);
+//			display.addTemporaryPrintable(newObs4, Color.BLUE, Layer.MIDDLE.layer);
 			obsDyn.add(newObs1);
 			obsDyn.add(newObs2);
 			obsDyn.add(newObs3);
@@ -107,10 +104,10 @@ public class Example2
 			System.out.println("\nSecond search :");
 			for(ItineraryPoint p : path)
 			{
-				display.addTemporaryPrintable(p, Color.BLACK, Layer.FOREGROUND.layer);
+//				display.addTemporaryPrintable(p, Color.BLACK, Layer.FOREGROUND.layer);
 				System.out.println(p);
 			}
-			display.refresh();
+//			display.refresh();
 			
 			try
 			{
@@ -123,7 +120,7 @@ public class Example2
 			
 			// Let's remove the dynamic obstacle
 			obsDyn.clear();
-			display.clearTemporaryPrintables();
+//			display.clearTemporaryPrintables();
 			kraken.initializeNewSearch(new SearchParameters(new XYO(0, 200, 0), new XY(1000, 1000)));
 			path = kraken.search();
 			
@@ -133,10 +130,10 @@ public class Example2
 			System.out.println("\nThird search :");
 			for(ItineraryPoint p : path)
 			{
-				display.addTemporaryPrintable(p, Color.BLACK, Layer.FOREGROUND.layer);
+//				display.addTemporaryPrintable(p, Color.BLACK, Layer.FOREGROUND.layer);
 				System.out.println(p);
 			}
-			display.refresh();
+//			display.refresh();
 		}
 		catch(PathfindingException e)
 		{

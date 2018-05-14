@@ -3,12 +3,9 @@
  * Distributed under the MIT License.
  */
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import pfg.graphic.GraphicDisplay;
-import pfg.graphic.printable.Layer;
 import pfg.kraken.Kraken;
 import pfg.kraken.SearchParameters;
 import pfg.kraken.exceptions.PathfindingException;
@@ -86,8 +83,6 @@ public class ExampleEurobot2017
 
 		Kraken kraken = new Kraken(robot, obs, new XY(-1500,0), new XY(1500, 2000), "kraken-examples.conf", "trajectory", "eurobot2017");
 
-		GraphicDisplay display = kraken.getGraphicDisplay();
-		
 		try
 		{
 			kraken.initializeNewSearch(new SearchParameters(new XYO(-850, 400, Math.PI/2), new XYO(850, 400, -Math.PI/2)));
@@ -96,11 +91,8 @@ public class ExampleEurobot2017
 			
 			for(ItineraryPoint p : path)
 			{
-				display.addPrintable(p, Color.BLACK, Layer.FOREGROUND.layer);
 				System.out.println(p);
 			}
-			
-			display.refresh();
 		}
 		catch(PathfindingException e)
 		{

@@ -3,18 +3,11 @@
  * Distributed under the MIT License.
  */
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import pfg.config.ConfigInfo;
-import pfg.graphic.DebugTool;
-import pfg.graphic.GraphicDisplay;
-import pfg.graphic.Vec2RO;
-import pfg.graphic.printable.Layer;
 import pfg.kraken.Kraken;
 import pfg.kraken.SearchParameters;
-import pfg.kraken.SeverityCategoryKraken;
 import pfg.kraken.exceptions.PathfindingException;
 import pfg.kraken.obstacles.CircularObstacle;
 import pfg.kraken.obstacles.Obstacle;
@@ -77,8 +70,7 @@ public class Example1
 		/*
 		 * The graphic display (optional)
 		 */
-		DebugTool debug = DebugTool.getDebugTool(new Vec2RO(0, 1000), SeverityCategoryKraken.INFO, "kraken-examples.conf", "");
-		GraphicDisplay display = debug.getGraphicDisplay();
+//		GraphicDisplay display = kraken.getGraphicDisplay();
 
 		try
 		{
@@ -105,14 +97,14 @@ public class Example1
 			System.out.println("Here is the trajectory :");
 			for(ItineraryPoint p : path)
 			{
-				display.addPrintable(p, Color.BLACK, Layer.FOREGROUND.layer);
+//				display.addPrintable(p, Color.BLACK, Layer.FOREGROUND.layer);
 				System.out.println(p);
 			}
 
 			/*
 			 * Refresh the window frame.
 			 */
-			display.refresh();
+//			display.refresh();
 		}
 		catch(PathfindingException e)
 		{

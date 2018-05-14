@@ -3,12 +3,9 @@
  * Distributed under the MIT License.
  */
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import pfg.graphic.GraphicDisplay;
-import pfg.graphic.printable.Layer;
 import pfg.kraken.Kraken;
 import pfg.kraken.SearchParameters;
 import pfg.kraken.exceptions.PathfindingException;
@@ -44,7 +41,6 @@ public class Example3
 		RectangularObstacle robot = new RectangularObstacle(250, 80, 110, 110); 
 
 		Kraken kraken = new Kraken(robot, obs, new XY(-1500,0), new XY(1500, 2000), "kraken-examples.conf", "trajectory"/*, "detailed"*/);
-		GraphicDisplay display = kraken.getGraphicDisplay();
 
 		/*
 		 * You can perfectly use two instances of Kraken (for example if two robots have different size)
@@ -68,11 +64,8 @@ public class Example3
 			System.out.println("\nBlack robot search :");
 			for(ItineraryPoint p : path)
 			{
-				display.addPrintable(p, Color.BLACK, Layer.FOREGROUND.layer);
 				System.out.println(p);
 			}
-			
-			display.refresh();
 			
 			/*
 			 * The second robot is smaller, so it can take a different path (blue trajectory)
@@ -85,11 +78,8 @@ public class Example3
 			System.out.println("\nBlue robot search :");
 			for(ItineraryPoint p : path)
 			{
-				display.addPrintable(p, Color.BLUE, Layer.FOREGROUND.layer);
 				System.out.println(p);
-			}
-			
-			display.refresh();
+			}			
 
 		}
 		catch(PathfindingException e)

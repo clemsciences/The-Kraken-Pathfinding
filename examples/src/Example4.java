@@ -3,12 +3,9 @@
  * Distributed under the MIT License.
  */
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import pfg.graphic.GraphicDisplay;
-import pfg.graphic.printable.Layer;
 import pfg.kraken.Kraken;
 import pfg.kraken.SearchParameters;
 import pfg.kraken.exceptions.PathfindingException;
@@ -44,8 +41,6 @@ public class Example4
 		
 		Kraken kraken = new Kraken(robot, obs, new XY(-1500,0), new XY(1500, 2000), "kraken-examples.conf", "trajectory"/*, "detailed"*/);
 
-		GraphicDisplay display = kraken.getGraphicDisplay();
-
 		try
 		{
 			/*
@@ -58,11 +53,8 @@ public class Example4
 			System.out.println("Here is the trajectory :");
 			for(ItineraryPoint p : path)
 			{
-				display.addPrintable(p, Color.BLACK, Layer.FOREGROUND.layer);
 				System.out.println(p);
 			}
-
-			display.refresh();
 		}
 		catch(PathfindingException e)
 		{
