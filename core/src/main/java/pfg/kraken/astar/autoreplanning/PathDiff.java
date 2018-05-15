@@ -6,7 +6,8 @@
 package pfg.kraken.astar.autoreplanning;
 
 import java.util.List;
-import pfg.kraken.robot.ItineraryPoint;
+
+import pfg.kraken.struct.ItineraryPoint;
 
 /**
  * A path diff

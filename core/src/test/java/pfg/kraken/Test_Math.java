@@ -6,7 +6,9 @@
 package pfg.kraken;
 
 import org.junit.Test;
-import pfg.kraken.utils.XY_RW;
+
+import pfg.kraken.struct.XY_RW;
+
 import org.junit.Assert;
 import org.junit.Before;
 

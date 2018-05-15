@@ -7,7 +7,7 @@ package pfg.kraken.dstarlite.navmesh;
 
 import java.io.Serializable;
 
-import pfg.kraken.utils.XY;
+import pfg.kraken.struct.XY;
 
 /**
  * A triangle of the navmesh

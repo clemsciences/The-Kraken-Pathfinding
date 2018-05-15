@@ -3,15 +3,11 @@
  * Distributed under the MIT License.
  */
 
-package pfg.kraken.robot;
+package pfg.kraken.struct;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-
-import pfg.kraken.utils.XY;
-import pfg.kraken.utils.XYO;
-import pfg.kraken.utils.XY_RW;
 
 /**
  * Une structure qui regroupe des infos de cinématique

@@ -3,7 +3,7 @@
  * Distributed under the MIT License.
  */
 
-package pfg.kraken.robot;
+package pfg.kraken.struct;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -79,7 +79,7 @@ public class ItineraryPoint
 	
 	public ItineraryPoint(CinematiqueObs c)
 	{
-		this(c.getPosition().getX(), c.getPosition().getY(), c.orientationReelle, c.courbureReelle, c.enMarcheAvant, c.maxSpeed, c.possibleSpeed, c.stop);
+		this(c.cinem.getPosition().getX(), c.cinem.getPosition().getY(), c.cinem.orientationReelle, c.cinem.courbureReelle, c.cinem.enMarcheAvant, c.maxSpeed, c.possibleSpeed, c.cinem.stop);
 	}
 	
 	@Override

@@ -7,8 +7,9 @@
 package pfg.kraken.obstacles;
 
 import java.io.Serializable;
-import pfg.kraken.utils.XY;
-import pfg.kraken.utils.XY_RW;
+
+import pfg.kraken.struct.XY;
+import pfg.kraken.struct.XY_RW;
 
 /**
  * Superclasse abstraite des obstacles.

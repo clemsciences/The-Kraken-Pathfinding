@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import pfg.kraken.utils.XY;
+import pfg.kraken.struct.XY;
 
 /**
  * A node of the navmesh

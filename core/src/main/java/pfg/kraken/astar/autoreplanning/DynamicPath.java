@@ -14,9 +14,10 @@ import pfg.kraken.exceptions.NoPathException;
 import pfg.kraken.exceptions.PathfindingException;
 import pfg.kraken.obstacles.RectangularObstacle;
 import pfg.kraken.obstacles.container.DynamicObstacles;
-import pfg.kraken.robot.Cinematique;
-import pfg.kraken.robot.CinematiqueObs;
-import pfg.kraken.robot.ItineraryPoint;
+import pfg.kraken.struct.Cinematique;
+import pfg.kraken.struct.CinematiqueObs;
+import pfg.kraken.struct.ItineraryPoint;
+
 import static pfg.kraken.astar.tentacles.Tentacle.PRECISION_TRACE_MM;
 /**
  * A path manager that can handle dynamic update
@@ -273,7 +274,7 @@ public final class DynamicPath
 	public Cinematique getNewStart()
 	{
 		assert etat == State.REPLANNING : etat;
-		return path[pathSize - 1];
+		return path[pathSize - 1].cinem;
 	}
 
 	/**

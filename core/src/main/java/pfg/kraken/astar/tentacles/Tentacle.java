@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 import pfg.kraken.astar.tentacles.types.TentacleType;
 import pfg.kraken.obstacles.RectangularObstacle;
-import pfg.kraken.robot.CinematiqueObs;
+import pfg.kraken.struct.CinematiqueObs;
 
 /**
  * Un arc de trajectoire courbe. Juste une succession de points.
@@ -51,7 +51,7 @@ public abstract class Tentacle implements Iterable<RectangularObstacle>, Iterato
 	public final double getDuree(Tentacle tentacleParent, double translationalSpeed, int tempsArret, double maxAcceleration, double deltaSpeedFromStop)
 	{
 		boolean firstMove = tentacleParent == null; // le premier mouvement est particulier : on est déjà arrêté !
-		boolean beginWithStop = getPoint(0).stop;
+		boolean beginWithStop = getPoint(0).cinem.stop;
 		int nb = getNbPoints();
 		double out = 0;
 		

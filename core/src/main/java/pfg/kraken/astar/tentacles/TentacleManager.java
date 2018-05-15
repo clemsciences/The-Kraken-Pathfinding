@@ -23,9 +23,10 @@ import pfg.kraken.astar.tentacles.types.TentacleType;
 import pfg.kraken.dstarlite.DStarLite;
 import pfg.kraken.exceptions.UnknownModeException;
 import pfg.kraken.memory.NodePool;
-import pfg.kraken.robot.Cinematique;
-import pfg.kraken.robot.CinematiqueObs;
-import pfg.kraken.utils.XYO;
+import pfg.kraken.struct.Cinematique;
+import pfg.kraken.struct.CinematiqueObs;
+import pfg.kraken.struct.XYO;
+
 import static pfg.kraken.astar.tentacles.Tentacle.*;
 
 /**
@@ -133,7 +134,7 @@ public final class TentacleManager implements Iterator<AStarNode>
 				double maxSpeed = current.possibleSpeed;
 				double currentSpeed = lastPossibleSpeed;
 				
-				nextStop = current.stop;
+				nextStop = current.cinem.stop;
 				if(lastStop)
 					current.possibleSpeed = 0;
 				else if(currentSpeed < maxSpeed)
@@ -148,7 +149,7 @@ public final class TentacleManager implements Iterator<AStarNode>
 					currentSpeed = Math.min(currentSpeed, maxSpeed);
 					current.possibleSpeed = currentSpeed;
 				}
-				current.stop = lastStop;
+				current.cinem.stop = lastStop;
 				
 				trajectory.addFirst(current);
 				

@@ -15,11 +15,12 @@ import pfg.kraken.astar.tentacles.types.TentacleType;
 import pfg.kraken.dstarlite.DStarLite;
 import pfg.kraken.memory.CinemObsPool;
 import pfg.kraken.obstacles.RectangularObstacle;
-import pfg.kraken.robot.Cinematique;
-import pfg.kraken.robot.CinematiqueObs;
-import pfg.kraken.utils.XY;
-import pfg.kraken.utils.XYO;
-import pfg.kraken.utils.XY_RW;
+import pfg.kraken.struct.Cinematique;
+import pfg.kraken.struct.CinematiqueObs;
+import pfg.kraken.struct.XY;
+import pfg.kraken.struct.XYO;
+import pfg.kraken.struct.XY_RW;
+
 import static pfg.kraken.astar.tentacles.Tentacle.*;
 
 /**
@@ -318,17 +319,17 @@ public final class BezierComputer implements TentacleComputer
 					maxSpeed,
 					false);
 			
-			lastCourbure = obs.courbureGeometrique;
+			lastCourbure = obs.cinem.courbureGeometrique;
 		}
 
-		if(out.getFirst().getPosition().distanceFast(cinematiqueInitiale.getPosition()) < PRECISION_TRACE_MM/2)
+		if(out.getFirst().cinem.getPosition().distanceFast(cinematiqueInitiale.getPosition()) < PRECISION_TRACE_MM/2)
 			memory.destroyNode(out.removeFirst());
 
 		if(out.isEmpty())
 			return null;
 
-		assert out.getFirst().getPosition().distanceFast(cinematiqueInitiale.getPosition()) <= 32;
-		if(out.getFirst().getPosition().distanceFast(cinematiqueInitiale.getPosition()) > 32)
+		assert out.getFirst().cinem.getPosition().distanceFast(cinematiqueInitiale.getPosition()) <= 32;
+		if(out.getFirst().cinem.getPosition().distanceFast(cinematiqueInitiale.getPosition()) > 32)
 		{
 			for(CinematiqueObs c : out)
 				memory.destroyNode(c);
@@ -336,7 +337,7 @@ public final class BezierComputer implements TentacleComputer
 		}
 
 		if(Math.abs(cinematiqueInitiale.courbureGeometrique - lastCourbure) > 0.3 || rebrousse)
-			out.getFirst().stop = true;
+			out.getFirst().cinem.stop = true;
 		
 		return out;
 	}
@@ -548,17 +549,17 @@ public final class BezierComputer implements TentacleComputer
 					tmpPos[indexThread].getY(), // y
 					orientation, enMarcheAvant, courbure, rootedMaxAcceleration, maxSpeed, false);
 			
-			lastCourbure = obs.courbureGeometrique;
+			lastCourbure = obs.cinem.courbureGeometrique;
 		}
 		
-		if(out.getFirst().getPosition().distanceFast(cinematiqueInitiale.getPosition()) < PRECISION_TRACE_MM / 2)
+		if(out.getFirst().cinem.getPosition().distanceFast(cinematiqueInitiale.getPosition()) < PRECISION_TRACE_MM / 2)
 			memory.destroyNode(out.removeFirst());
 
 		if(out.isEmpty())
 			return null;
 
 		if(Math.abs(cinematiqueInitiale.courbureGeometrique - lastCourbure) > 0.3 || rebrousse)
-			out.getFirst().stop = true;
+			out.getFirst().cinem.stop = true;
 		
 		return out;
 	}
