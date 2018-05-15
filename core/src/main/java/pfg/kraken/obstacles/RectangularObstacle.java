@@ -110,7 +110,7 @@ public class RectangularObstacle extends Obstacle
 
 	public RectangularObstacle clone()
 	{
-		return new RectangularObstacle(position, coinHautDroite, coinBasGauche, angle);
+		return new RectangularObstacle(centreRotation, coinHautDroite, coinBasGauche, angle);
 	}
 	
 	/**
@@ -125,8 +125,8 @@ public class RectangularObstacle extends Obstacle
 	 */
 	protected void convertitVersRepereObstacle(XY point, XY_RW out)
 	{
-		out.setX(cos * (point.getX() - position.getX()) + sin * (point.getY() - position.getY()));
-		out.setY(-sin * (point.getX() - position.getX()) + cos * (point.getY() - position.getY()));
+		out.setX(cos * (point.getX() - centreRotation.getX()) + sin * (point.getY() - centreRotation.getY()));
+		out.setY(-sin * (point.getX() - centreRotation.getX()) + cos * (point.getY() - centreRotation.getY()));
 	}
 
 	/**
@@ -138,8 +138,8 @@ public class RectangularObstacle extends Obstacle
 	 */
 	protected void convertitVersRepereTable(XY point, XY_RW out)
 	{
-		out.setX(cos * point.getX() - sin * point.getY() + position.getX());
-		out.setY(sin * point.getX() + cos * point.getY() + position.getY());
+		out.setX(cos * point.getX() - sin * point.getY() + centreRotation.getX());
+		out.setY(sin * point.getX() + cos * point.getY() + centreRotation.getY());
 	}
 
 	/**
@@ -150,7 +150,7 @@ public class RectangularObstacle extends Obstacle
 	 */
 	protected double getXConvertiVersRepereObstacle(XY point)
 	{
-		return cos * (point.getX() - position.getX()) + sin * (point.getY() - position.getY());
+		return cos * (point.getX() - centreRotation.getX()) + sin * (point.getY() - centreRotation.getY());
 	}
 
 	/**
@@ -161,7 +161,7 @@ public class RectangularObstacle extends Obstacle
 	 */
 	protected double getYConvertiVersRepereObstacle(XY point)
 	{
-		return -sin * (point.getX() - position.getX()) + cos * (point.getY() - position.getY());
+		return -sin * (point.getX() - centreRotation.getX()) + cos * (point.getY() - centreRotation.getY());
 	}
 
 	/**
@@ -312,7 +312,7 @@ public class RectangularObstacle extends Obstacle
 				|| XY.segmentIntersection(pointA, pointB, coinBasDroiteRotate, coinBasGaucheRotate))
 			return true;
 
-	    // dernière possibilité, A ou B dans le cercle
+	    // dernière possibilité, A ou B dans le rectangle
 	    return isInObstacle(pointA) || isInObstacle(pointB);
 	}
 	
@@ -324,18 +324,18 @@ public class RectangularObstacle extends Obstacle
 	 */
 	public void copy(RectangularObstacle obstacle)
 	{
-		obstacle.update(position, angle);
+		obstacle.update(centreRotation, angle);
 	}
 	
-	public RectangularObstacle update(XY position, double orientation)
+	public void update(XY position, double orientation)
 	{
-		return update(position.getX(), position.getY(), orientation);
+		update(position.getX(), position.getY(), orientation);
 	}
 	
-	public RectangularObstacle update(double x, double y, double orientation)
+	public void update(double x, double y, double orientation)
 	{
-		this.position.setX(x);
-		this.position.setY(y);
+		this.centreRotation.setX(x);
+		this.centreRotation.setY(y);
 		this.angle = orientation;
 		cos = Math.cos(angle);
 		sin = Math.sin(angle);
@@ -345,8 +345,6 @@ public class RectangularObstacle extends Obstacle
 		convertitVersRepereTable(coinHautDroite, coinHautDroiteRotate);
 		coinBasDroiteRotate.copy(centreGeometrique);
 		centreGeometrique = centreGeometrique.plus(coinHautGaucheRotate).scalar(0.5);
-
-		return this;
 	}
 
 }

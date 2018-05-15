@@ -34,10 +34,7 @@ public class CompoundObstacle extends Obstacle
 
 
 	/**
-	 * Calcul s'il y a collision avec un ObstacleRectangularAligned.
-	 * Attention! Ne pas utiliser un ObstacleRectangular au lieu de
-	 * l'ObstacleRectangularAligned!
-	 * Utilise le calcul d'axe de séparation
+	 * Calcul s'il y a collision avec un ObstacleRectangular
 	 * 
 	 * @param r
 	 * @return

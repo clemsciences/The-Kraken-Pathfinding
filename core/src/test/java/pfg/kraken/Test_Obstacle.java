@@ -47,7 +47,7 @@ public class Test_Obstacle extends JUnit_Test
 		Assert.assertTrue(o.squaredDistance(new XY(0, -7)) > 0);
 	}
 
-	@Test
+/*	@Test
 	public void test_collision_cercle_distance() throws Exception
 	{
 		CircularObstacle o = new CircularObstacle(new XY(0, 0), 10);
@@ -64,7 +64,7 @@ public class Test_Obstacle extends JUnit_Test
 		Assert.assertTrue(!o.isProcheObstacle(new XY(20, 0), 5));
 		Assert.assertTrue(!o.isProcheObstacle(new XY(0, 8), 5));
 		Assert.assertTrue(!o.isProcheObstacle(new XY(0, -8), 5));
-	}
+	}*/
 
 	@Test
 	public void test_is_dans_obstacle_rectangle() throws Exception

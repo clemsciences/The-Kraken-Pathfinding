@@ -82,7 +82,7 @@ public final class Kraken
 	public Kraken(RectangularObstacle vehicleTemplate, PhysicsEngine engine, Iterable<Obstacle> fixedObstacles, DynamicObstacles dynObs, XY bottomLeftCorner, XY topRightCorner, String configfile, String...configprofile)
 	{
 		injector = new Injector();
-		config = new Config(ConfigInfoKraken.values(), isJUnitTest(), configfile, configprofile);
+		config = new Config(ConfigInfoKraken.values(), false, configfile, configprofile);
 		injector.addService(RectangularObstacle.class, vehicleTemplate);
 
 		/*
@@ -145,14 +145,14 @@ public final class Kraken
 		astar.stop = true;
 	}
 	
-	private boolean isJUnitTest()
+/*	private boolean isJUnitTest()
 	{
 	    StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
 	    for (StackTraceElement element : stackTrace)
 	        if (element.getClassName().startsWith("org.junit."))
 	            return true;
 	    return false;
-	}
+	}*/
 	
 	/**
 	 * Initialize a new search from :

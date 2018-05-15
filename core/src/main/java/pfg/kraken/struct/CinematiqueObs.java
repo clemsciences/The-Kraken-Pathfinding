@@ -12,7 +12,7 @@ import pfg.kraken.memory.Memorizable;
 import pfg.kraken.obstacles.RectangularObstacle;
 
 /**
- * Une cinématique + un obstacle associé
+ * Une cinématique + un obstacle associé (ainsi que des vitesses)
  * 
  * @author pf
  *

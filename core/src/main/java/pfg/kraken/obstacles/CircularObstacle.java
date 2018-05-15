@@ -41,7 +41,7 @@ public class CircularObstacle extends Obstacle
 	@Override
 	public double squaredDistance(XY position)
 	{
-		double out = Math.max(0, position.distance(this.position) - radius);
+		double out = Math.max(0, position.distance(this.centreRotation) - radius);
 		return out * out;
 	}
 
@@ -50,9 +50,9 @@ public class CircularObstacle extends Obstacle
 	{
 		// Calcul simple permettant de vérifier les cas absurdes où les
 		// obstacles sont loin l'un de l'autre
-		if(position.squaredDistance(o.centreGeometrique) >= (radius + o.getDemieDiagonale()) * (radius + o.getDemieDiagonale()))
+		if(centreRotation.squaredDistance(o.centreGeometrique) >= (radius + o.getDemieDiagonale()) * (radius + o.getDemieDiagonale()))
 			return false;
-		return o.squaredDistance(position) < squared_radius;
+		return o.squaredDistance(centreRotation) < squared_radius;
 	}
 	
 	@Override
@@ -65,14 +65,14 @@ public class CircularObstacle extends Obstacle
 		XY[] out = new XY[nbPoints];
 		
 		for(int i = 0; i < nbPoints; i++)
-			out[i] = new XY_RW(expansion + radius, i * 2 * Math.PI / nbPoints, true).plus(position);
+			out[i] = new XY_RW(expansion + radius, i * 2 * Math.PI / nbPoints, true).plus(centreRotation);
 		return out;
 	}
 
 	@Override
 	public boolean isInObstacle(XY pos)
 	{
-		return pos.squaredDistance(position) <= squared_radius;
+		return pos.squaredDistance(centreRotation) <= squared_radius;
 	}
 
 	@Override
@@ -85,8 +85,8 @@ public class CircularObstacle extends Obstacle
     	if (!isCollidingLine(pointA, pointB))
 	        return false;  // si on ne touche pas la droite, on ne touchera jamais le segment
     	
-    	double pscal1 = pointB.minusNewVector(pointA).dot(position.minusNewVector(pointA));
-    	double pscal2 = pointA.minusNewVector(pointB).dot(position.minusNewVector(pointB));
+    	double pscal1 = pointB.minusNewVector(pointA).dot(centreRotation.minusNewVector(pointA));
+    	double pscal2 = pointA.minusNewVector(pointB).dot(centreRotation.minusNewVector(pointB));
 	    if (pscal1>=0 && pscal2>=0)
 	       return true;
 	    
@@ -96,7 +96,7 @@ public class CircularObstacle extends Obstacle
 	
 	private boolean isCollidingLine(XY pointA, XY pointB)
 	{
-		XY C = position;
+		XY C = centreRotation;
 		XY_RW AB = pointB.minusNewVector(pointA);
 		XY_RW AC = C.minusNewVector(pointA);
 	    double numerateur = Math.abs(AB.getX()*AC.getY() - AB.getY()*AC.getX());

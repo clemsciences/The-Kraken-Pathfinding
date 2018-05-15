@@ -176,7 +176,7 @@ public final class ClothoidesComputer implements TentacleComputer
 	 * mètre, on aura une courbure souvent plus grande que 1
 	 * Le contenu est mis dans l'arccourbe directement
 	 * 
-	 * @param position
+	 * @param centreRotation
 	 * @param orientationGeometrique
 	 * @param courbureGeometrique
 	 * @param vitesse
@@ -251,8 +251,8 @@ public final class ClothoidesComputer implements TentacleComputer
 	/**
 	 * Construit un arc courbe dynamique qui ramène la courbure à 0
 	 * 
-	 * @param position
-	 * @param orientation
+	 * @param centreRotation
+	 * @param orientationReelle
 	 * @param curvature
 	 * @param vitesseTr
 	 * @param modified
@@ -509,8 +509,8 @@ public final class ClothoidesComputer implements TentacleComputer
 	/**
 	 * Construit un arc courbe qui fait un quart de tour au robot
 	 * 
-	 * @param position
-	 * @param orientation
+	 * @param centreRotation
+	 * @param orientationReelle
 	 * @param curvature
 	 * @param vitesseTr
 	 * @param modified

@@ -21,7 +21,8 @@ import pfg.kraken.struct.XY_RW;
 public abstract class Obstacle implements Serializable
 {
 	private static final long serialVersionUID = -2508727703931042322L;
-	protected XY_RW position;
+	
+	protected XY_RW centreRotation;
 	
 	/**
 	 * Constructeur. La position est celle du centre de rotation de l'obstacle
@@ -30,13 +31,13 @@ public abstract class Obstacle implements Serializable
 	 */
 	public Obstacle(XY position)
 	{
-		this.position = position.clone();
+		this.centreRotation = position.clone();
 	}
 
 	@Override
 	public String toString()
 	{
-		return "Obstacle en " + position;
+		return "Obstacle en " + centreRotation;
 	}
 
 	/**
@@ -47,17 +48,17 @@ public abstract class Obstacle implements Serializable
 	 * @param distance
 	 * @return
 	 */
-	public boolean isProcheObstacle(XY position, int distance)
+/*	public boolean isProcheObstacle(XY position, int distance)
 	{
 		return squaredDistance(position) < distance * distance;
-	}
+	}*/
 
 	/**
 	 * Renvoi "vrai" si le centre de obs est à moins de distance d'un bord de
 	 * l'obstacle ou à l'intérieur
 	 * Ce n'est pas pareil que vérifier une collision !
 	 * 
-	 * @param position
+	 * @param centreRotation
 	 * @param distance
 	 * @return
 	 */
@@ -70,7 +71,7 @@ public abstract class Obstacle implements Serializable
 
 	public int hashCode()
 	{
-		return position.hashCode();
+		return centreRotation.hashCode();
 	}
 
 	public abstract double squaredDistance(XY position);

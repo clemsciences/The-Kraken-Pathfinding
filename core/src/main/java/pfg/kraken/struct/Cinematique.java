@@ -18,45 +18,45 @@ import java.text.NumberFormat;
 
 public class Cinematique implements Serializable
 {
+	// nécessaire à la sérialisation
 	private static final long serialVersionUID = 1548985891767047059L;
+	
+	// la position du robot
 	protected final XY_RW position = new XY_RW();
-	public volatile double orientationGeometrique; // il s'agit de l'orientation
-													// qui avance. donc
-													// l'arrière du robot s'il
-													// recule
-	public volatile boolean enMarcheAvant;
+	
+	// l'orientation géométrique est utilisé pour le calcul de tentacule
+	// peut être différente de l'orientation réelle
+	// idem pour la courbure géométrique
+	public volatile double orientationGeometrique;
 	public volatile double courbureGeometrique;
+
+	// le robot est-il en marche avant ?
+	public volatile boolean enMarcheAvant;
+	
+	// orientation réelle du robot à cet endroit-là
 	public volatile double orientationReelle;
+	
+	// courbure réelle du robot à cet endroit-là
 	public volatile double courbureReelle;
+	
+	// le robot doit-il s'arrêter à ce point
 	public volatile boolean stop;
+	
+	// utilisé pour l'affichage uniquement
 	private final static NumberFormat formatter = new DecimalFormat("#0.000");
 	
+	// Constructeur
 	public Cinematique(XYO xyo)
 	{
 		updateReel(xyo.position.getX(), xyo.position.getY(), xyo.orientation, 0);
 	}
 	
-	public XYO getXYO()
-	{
-		return new XYO(position, orientationReelle);
-	}
-	
+	// Constructeur
 	public Cinematique(double x, double y, double orientationGeometrique, boolean enMarcheAvant, double courbure, boolean stop)
 	{
 		update(x, y, orientationGeometrique, enMarcheAvant, courbure, stop);
 	}
-
-	/**
-	 * Constructeur par copie
-	 * 
-	 * @param cinematique
-	 */
-/*	public Cinematique(Cinematique cinematique)
-	{
-		enMarcheAvant = cinematique.enMarcheAvant;
-		courbureGeometrique = cinematique.courbureGeometrique;
-	}*/
-
+	
 	/**
 	 * Cinématique vide
 	 */
@@ -82,15 +82,12 @@ public class Cinematique implements Serializable
 		}
 	}
 
+	// TODO : remplacer ce "getPosition" par une utilisation directe de l'attribut
 	public final XY getPosition()
 	{
 		return position;
 	}
 
-/*	public final XY_RW getPositionEcriture()
-	{
-		return position;
-	}*/
 
 	@Override
 	public String toString()
@@ -98,6 +95,9 @@ public class Cinematique implements Serializable
 		return position + ", " + formatter.format(orientationReelle) + ", " + (enMarcheAvant ? "marche avant" : "marche arrière") + ", courbure : " + formatter.format(courbureReelle)+ (stop ? ", stop" : "");
 	}
 
+	/**
+	 * Utilisé par la PriorityQueue de TentacularAStar
+	 */
 	@Override
 	public int hashCode()
 	{
@@ -114,12 +114,8 @@ public class Cinematique implements Serializable
 		int codeCourbure, codeOrientation;
 		if(courbureReelle < -3)
 			codeCourbure = 0;
-		// else if(courbureReelle < -2)
-		// codeCourbure = 1;
 		else if(courbureReelle < 0)
 			codeCourbure = 2;
-		// else if(courbureReelle < 2)
-		// codeCourbure = 3;
 		else if(courbureReelle < 3)
 			codeCourbure = 4;
 		else
@@ -143,6 +139,10 @@ public class Cinematique implements Serializable
 		return ((((((int) (position.getX()) + 1500) / 30) * 200 + (int) (position.getY()) / 30) * 2 + codeSens) * 16 + codeOrientation) * 6 + codeCourbure;
 	}
 
+
+	/**
+	 * Utilisé par la PriorityQueue de TentacularAStar
+	 */
 	@Override
 	public boolean equals(Object o)
 	{

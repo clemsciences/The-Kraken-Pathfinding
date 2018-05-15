@@ -14,6 +14,7 @@ package pfg.kraken.struct;
 
 public final class XY_RW extends XY
 {
+	// Nécessaire à la sérialisation
 	private static final long serialVersionUID = 1L;
 
 	public XY_RW()

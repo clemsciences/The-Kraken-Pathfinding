@@ -465,7 +465,7 @@ public final class BezierComputer implements TentacleComputer
 	 * points de contrôle A, B et C.
 	 * On place la discontinuité au début
 	 * 
-	 * @param position
+	 * @param centreRotation
 	 * @param vecteurVitesse2
 	 * @param position2
 	 * @return

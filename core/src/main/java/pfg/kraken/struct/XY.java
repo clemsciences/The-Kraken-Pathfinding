@@ -19,9 +19,13 @@ import java.text.NumberFormat;
 
 public class XY implements Serializable
 {
+	// Nécessaire à la sérialisation
 	private static final long serialVersionUID = 1L;
+	
 	protected volatile double x;
 	protected volatile double y;
+	
+	// Utilisé pour l'affichage uniquement
 	private static final DecimalFormatSymbols symbols = new DecimalFormatSymbols();
 	private static final NumberFormat formatter;
 	
@@ -77,6 +81,7 @@ public class XY implements Serializable
 	}
 
 	// Renvoie une approximation de la distance. Très rapide
+	// C'est en fait la distance octile
 	public final double distanceFast(XY other)
 	{
 		double dx = Math.abs(x - other.x);
