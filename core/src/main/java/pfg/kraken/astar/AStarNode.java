@@ -11,7 +11,7 @@ import pfg.kraken.astar.tentacles.Tentacle;
 import pfg.kraken.memory.MemPoolState;
 import pfg.kraken.memory.Memorizable;
 import pfg.kraken.obstacles.RectangularObstacle;
-import pfg.kraken.robot.RobotState;
+import pfg.kraken.robot.Cinematique;
 
 /**
  * A node of the A*.
@@ -22,7 +22,8 @@ import pfg.kraken.robot.RobotState;
 
 public final class AStarNode implements Memorizable
 {
-	public RobotState robot; // the cinematic state + the duration since the beginning of the search
+	public Cinematique cinematique; // the cinematic state + the duration since the beginning of the search
+	public volatile long date = 0;
 	public int g_score; // distance du point de départ à ce point
 	public int f_score; // g_score + heuristique = meilleure distance qu'on
 							// peut espérer avec ce point
@@ -49,14 +50,14 @@ public final class AStarNode implements Memorizable
 	public AStarNode()
 	{
 		cameFromArcStatique = null;
-		robot = null;
+		cinematique = null;
 		state = null;
 	}
 	
-	public AStarNode(RobotState robot, RectangularObstacle vehicleTemplate)
+	public AStarNode(RectangularObstacle vehicleTemplate)
 	{
 		cameFromArcStatique = new StaticTentacle(vehicleTemplate);
-		this.robot = robot;
+		this.cinematique = new Cinematique();
 	}
 
 	public Tentacle getArc()
@@ -76,7 +77,7 @@ public final class AStarNode implements Memorizable
 	{
 		g_score = Integer.MAX_VALUE;
 		f_score = Integer.MAX_VALUE;
-		robot.initDate();
+		date = 0;
 	}
 
 	@Override
@@ -88,7 +89,7 @@ public final class AStarNode implements Memorizable
 	@Override
 	public int hashCode()
 	{
-		return robot.getCinematique().hashCode();
+		return cinematique.hashCode();
 	}
 
 	/**
