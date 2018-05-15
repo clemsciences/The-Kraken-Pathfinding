@@ -37,7 +37,8 @@ public final class BezierComputer implements TentacleComputer
 	private double rootedMaxAcceleration;
 	private double maxCurvatureDerivative;
 	private DStarLite dstarlite;
-
+	public final double[] maxSpeedLUT;
+	
 	public BezierComputer(DStarLite dstarlite, CinemObsPool memory, Config config, RectangularObstacle vehicleTemplate)
 	{
 		this.memory = memory;
@@ -95,7 +96,10 @@ public final class BezierComputer implements TentacleComputer
 			debut[i] = new Cinematique();
 		}
 		
-
+		maxSpeedLUT = new double[500];
+		maxSpeedLUT[0] = Double.MAX_VALUE;
+		for(int i = 1; i < 500; i++)
+			maxSpeedLUT[i] = Math.sqrt(10. / i);
 	}
 
 	private XY_RW[] delta, vecteurVitesse;
@@ -317,7 +321,8 @@ public final class BezierComputer implements TentacleComputer
 					courbure,
 					rootedMaxAcceleration,
 					maxSpeed,
-					false);
+					false,
+					maxSpeedLUT[(int) Math.round(Math.abs(10*courbure))]);
 			
 			lastCourbure = obs.cinem.courbureGeometrique;
 		}
@@ -547,7 +552,8 @@ public final class BezierComputer implements TentacleComputer
 			
 			obs.updateWithMaxSpeed(tmpPos[indexThread].getX(), // x
 					tmpPos[indexThread].getY(), // y
-					orientation, enMarcheAvant, courbure, rootedMaxAcceleration, maxSpeed, false);
+					orientation, enMarcheAvant, courbure, rootedMaxAcceleration, maxSpeed, false,
+					maxSpeedLUT[(int) Math.round(Math.abs(10*courbure))]);
 			
 			lastCourbure = obs.cinem.courbureGeometrique;
 		}

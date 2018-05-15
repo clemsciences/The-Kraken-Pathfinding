@@ -21,22 +21,19 @@ import pfg.kraken.obstacles.RectangularObstacle;
 public final class CinematiqueObs implements Memorizable, Serializable
 {
 	public final Cinematique cinem;
+	
+	/**
+	 * No need to port
+	 */
 	private static final long serialVersionUID = 1L;
 	public volatile RectangularObstacle obstacle;
 	public volatile double maxSpeed; // in m/s
 	public volatile double possibleSpeed; // in m/s
 
-	public static final double[] maxSpeedLUT;
-
+	/**
+	 * No need to port
+	 */
 	private volatile int indiceMemory;
-
-	static
-	{
-		maxSpeedLUT = new double[500];
-		maxSpeedLUT[0] = Double.MAX_VALUE;
-		for(int i = 1; i < 500; i++)
-			maxSpeedLUT[i] = Math.sqrt(10. / i);
-	}
 	
 	public String toString()
 	{
@@ -58,12 +55,18 @@ public final class CinematiqueObs implements Memorizable, Serializable
 		obstacle.copy(autre.obstacle);
 	}
 
+	/**
+	 * No need to port
+	 */
 	@Override
 	public void setIndiceMemoryManager(int indice)
 	{
 		indiceMemory = indice;
 	}
-
+	
+	/**
+	 * No need to port
+	 */
 	@Override
 	public int getIndiceMemoryManager()
 	{
@@ -82,17 +85,17 @@ public final class CinematiqueObs implements Memorizable, Serializable
 	 * @param obstacle
 	 * @param r
 	 */
-	public void update(double x, double y, double orientationGeometrique, boolean enMarcheAvant, double courbure, double rootedMaxAcceleration, boolean stop)
+	public void update(double x, double y, double orientationGeometrique, boolean enMarcheAvant, double courbure, double rootedMaxAcceleration, boolean stop, double maxSpeedLUT)
 	{
 		cinem.update(x, y, orientationGeometrique, enMarcheAvant, courbure, stop);
-		maxSpeed = rootedMaxAcceleration * maxSpeedLUT[(int) Math.round(Math.abs(10*courbure))];
+		maxSpeed = rootedMaxAcceleration * maxSpeedLUT;
 		obstacle.update(cinem.position, cinem.orientationReelle);
 	}
 	
-	public void updateWithMaxSpeed(double x, double y, double orientationGeometrique, boolean enMarcheAvant, double courbure, double rootedMaxAcceleration, double maxSpeed, boolean stop)
+	public void updateWithMaxSpeed(double x, double y, double orientationGeometrique, boolean enMarcheAvant, double courbure, double rootedMaxAcceleration, double maxSpeed, boolean stop, double maxSpeedLUT)
 	{
 		cinem.update(x, y, orientationGeometrique, enMarcheAvant, courbure, stop);
-		this.maxSpeed = Math.min(maxSpeed, rootedMaxAcceleration * maxSpeedLUT[(int) Math.round(Math.abs(10*courbure))]);
+		this.maxSpeed = Math.min(maxSpeed, rootedMaxAcceleration * maxSpeedLUT);
 		obstacle.update(cinem.position, cinem.orientationReelle);
 	}
 	
@@ -103,14 +106,23 @@ public final class CinematiqueObs implements Memorizable, Serializable
 		obstacle.update(position, orientationReelle);
 	}*/
 
+	/**
+	 * No need to port
+	 */
 	private volatile MemPoolState state = MemPoolState.FREE;
 	
+	/**
+	 * No need to port
+	 */
 	@Override
 	public void setState(MemPoolState state)
 	{
 		this.state = state;
 	}
 	
+	/**
+	 * No need to port
+	 */
 	@Override
 	public MemPoolState getState()
 	{
