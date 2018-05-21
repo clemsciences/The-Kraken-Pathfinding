@@ -7,7 +7,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 
-%\usepackage[bookmarks=true]{hyperref}
+\usepackage[bookmarks=true]{hyperref}
 \usepackage[a4paper,margin=2cm,headheight=15pt]{geometry}
 \usepackage{float}
 \usepackage{textcomp}
@@ -39,11 +39,11 @@
 %\SetWatermarkFontSize{1cm}
 %\SetWatermarkText{\sc{Ne pas emporter}}
 
-\usepackage[
-type={CC},
-modifier={by-nc-sa},
-version={3.0},
-]{doclicense}
+%\usepackage[
+%type={CC},
+%modifier={by-nc-sa},
+%version={3.0},
+%]{doclicense}
 
 
 
@@ -60,10 +60,10 @@ version={3.0},
     \begingroup
     \setcounter{footnote}{0}% Reset footnote counter
     \renewcommand{\thefootnote}{\fnsymbol{footnote}}% Modify footnote printing
-    \href{mailto:pierre-francois.gimenez@irit.fr}{pierre-francois.gimenez@irit.fr}
-    \href{mailto:clemsciences@aol.com}{clemsciences@aol.com}
-    In French: \url{TechTheTroll.wordpress.com} % avant
-    In French: \url{clementbesnier.pythonanywhere.com}
+   % \href{mailto:pierre-francois.gimenez@irit.fr}{pierre-francois.gimenez@irit.fr}
+    %\href{mailto:clemsciences@aol.com}{clemsciences@aol.com}
+  %  In French: \url{TechTheTroll.wordpress.com} % avant
+   % In French: \url{clementbesnier.pythonanywhere.com}
     \endgroup
 
     \newpage
@@ -147,13 +147,10 @@ version={3.0},
 %    Cette fois, c'est plus pour des raisons de difficultés mathématiques que nous avons mis de côté ces courbes.
 
     \subsection{Clothoids}\label{subsec:clothoids}
-    Also called Euler spiral \href{https://en.wikipedia.org/wiki/Euler\_spiral}{https://en.wikipedia.org/wiki/Euler\_spiral}
-
-
-    Il est fort probable que vous n'ayez jamais entendu parler des clothoïdes\footnote{aussi appelées spirale d'Euler ou spirale de Cornu}, et pourtant elles ont des propriétés qui les rendent omniprésentes : saviez-vous que les autoroutes et les lignes de chemin de fer ont des arcs de clothoïdes ? \cite{baass1982use}\footnote{En fait, les autoroutes et les chemins de fer utilisent les clothoïdes uniquement comme interpolation. La plupart du temps, ces itinéraire sont des lignes droites ou des arcs de cercle reliés entre eux par des clothoïdes.} Ainsi que les montagnes russes ? Et puis, les clothoïdes, c'est joli\footnote{on les utilise d'ailleurs dans le design, les polices d'écriture, …} \cite{baran2010sketching}.
-
-    Supposons que vous soyez au volant d'une voiture\footnote{ça marche aussi très bien avec un tractopelle}. Vous commencez à rouler en ligne droite jusqu'à obtenir une vitesse constante, puis vous vous mettez à tourner progressivement votre volant. Vous tournez le volant à \emph{vitesse constante} tandis que la (norme de la) vitesse de la voiture est aussi constante. Bravo, vous décrivez une spirale qui se resserre de plus en plus appelée clothoïde.
-
+    Also called Euler spiral \href{https://en.wikipedia.org/wiki/Euler\_spiral}{https://en.wikipedia.org/wiki/Euler\_spiral}, clothoids have wonderful properties so that we use them for all our motorways and railways, where straight lines join \cite{baass1982use}, for fonts and design.
+    
+    Let's assume we are driving a car with a constant speed. Then we are turning the wheel. That's all, the trajectory of the car is describing a clothoid! What is great with clothoids is that the derivative of the curvature of clothoids is a constant and this is good for cars.
+    
 %    \begin{figure}[ht]
 %        \centering
 %        \includegraphics[width=8cm]{Cornu_Spiral.png}
@@ -161,23 +158,23 @@ version={3.0},
 %        \caption{La clothoïde, c'est elle \textit{\#swag}}
 %    \end{figure}
 
-    Contrairement aux arcs de cercle où il faudrait à chaque changement d'arc tourner instantanément le volant à un autre angle, ici la modification de courbure est linéaire. Mécaniquement, ça se passe bien mieux qu'avec des arcs de cercles \cite{cloth}.
+    \textbf{Remarque :} From now, $'$ means the deriation according to curvilinear abscissa $s$.
 
-    \textbf{Remarque :} dans la suite, $'$ désigne la dérivation par rapport à l'abscisse curviligne $s$.
-
-    Pour rappel, si $\theta(s)$ est l'orientation du robot en $s$, la courbure en $s$ vaut :
+    If $\theta(s)$ is the orientation of the robot at $s$, the curvature at $s$ is :
     \[\kappa(s) = \theta'(s)\]
+    The greater the absolute value of the curvature, the faster we turn.
+    
     En gros, plus la valeur absolue de la courbure est grande, plus on tourne vite. De plus, si on approche la trajectoire du robot en $s$ par un cercle (appelé cercle osculateur), alors le rayon $R(s)$ de ce cercle est appelé rayon de courbure\footnote{plus précisément, c'est le rayon algébrique, qui peut être négatif} et vaut\footnote{notez, cette définition n'est pas utilisée par la suite. C'est juste que savoir que la courbure est l'inverse du rayon du courbure, dans la vie, c'est important} :
     \[R(s) = \frac{1}{\kappa(s)}\]
-    Son équation paramétrique est :
+    Its parametric equation is:
     \begin{align*}
         \tag{*}
         p(t) = a \int_0^t e^{i u^2} \, du
         \label{equ:clotho_param}
     \end{align*}
-    Ainsi, une clothoïde est donc une courbe pour laquelle on a $\kappa(s)' = C$.
+    A clothoid is thus a curve such that $\kappa(s)' = C$.
 
-    On peut facilement tracer une clothoïde unitaire ($C = 1$) grâce à son développement en série :
+    A unitary clothoid ($C = 1$) may be drawn thanks to its power series:
     \begin{align*}
         \tag{**}
         \begin{cases}
@@ -194,11 +191,12 @@ version={3.0},
     Ces calculs de série peuvent être effectués une fois pour toutes, les clothoïdes étant toutes similaires entre elle (sauf dans le cas particulier de la ligne droite et des cercles, c'est-à-dire quand $\kappa' = 0$)
 
     Par contre, il y a certains calculs qui devront être approchés, notamment la distance d'un point à la courbe\footnote{on en reparlera après}.
+    The distance between a point and the curve.
 
 %    \begin{wrapfigure}[15]{r}{180pt}
 %        \includegraphics[width=180pt]{doge.jpg}
 %    \end{wrapfigure}
-
+	
     De plus, si on fait intervenir la vitesse angulaire $\omega(s)$ et la vitesse instantanée $v(s)$ du robot, on a la relation suivante :
     \[\omega(s) = v(s) \times \theta'(s) = v(s) \times \kappa(s)\]
     Mais on n'est pas obligé de suivre une clothoïde à vitesse constante. Il suffit d'avoir :
@@ -230,7 +228,7 @@ version={3.0},
 
     \section{}
 
-    \href{https://en.wikipedia.org/wiki/Rotary_encoder}{https://en.wikipedia.org/wiki/Rotary_encoder}
+     \href{https://en.wikipedia.org/wiki/Rotary\_encoder}{https://en.wikipedia.org/wiki/Rotary\_encoder}
 
 
     On appelle \emph{codeur} un capteur rotatif qui permet de connaître les déplacements du robot. Il y en a deux, un pour chaque roue de propulsion. Ils sont soit intégrés aux moteurs, soit montés sur des roues folles. Ce deuxième cas, un peu plus lourd à mettre en œuvre mécaniquement, à l'avantage de détecter les patinages (quand les roues tournent mais glissent, ce qui fait que le robot ne bouge pas).
@@ -257,6 +255,9 @@ version={3.0},
     \subsubsection{Basics}
 
     \section{D*-lite}\label{sec:d*-lite}
+    
+    
+    \href{https://en.wikipedia.org/wiki/D*}{https://en.wikipedia.org/wiki/D*}
 
     \section{Control theory}\label{sec:controlTheory}
 
@@ -276,7 +277,7 @@ version={3.0},
 
     Le régulateur PID est un système d'asservissement qui s'appuie sur trois grandeurs : l'erreur, la dérivée de l'erreur et son intégrale. Il est très utilisé dans l'industrie et la robotique n'y fait pas exception.
 
-    Le problème avec le PID, c'est qu'il faut être asservi à une certaine valeur. Or, nous, on veut s'asservir à une \emph{trajectoire}, qui est constituée d'une infinité de positions\up{\textcolor{blue}{[réf. nécessaire]}}.
+    Le problème avec le PID, c'est qu'il faut être asservi à une certaine valeur. Or, nous, on veut s'asservir à une \emph{trajectoire}, qui est constituée d'une infinité de positions %\up{\textcolor{blue}{[réf. nécessaire]}}.
 
 %    \begin{figure}[ht]
 %        \centering
@@ -396,7 +397,7 @@ version={3.0},
 
 
 
-    \chapter*{Conclusion}
+    \section{Conclusion}
     \addcontentsline{toc}{chapter}{Conclusion}
 
     \hfill \textit{Où y a plus grand chose à dire…}
