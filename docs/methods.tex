@@ -250,14 +250,30 @@
 
 
     \section{Pathfinding}\label{sec:pathfinding}
-
+	Here is presented the core of this docs: finding the shortest path between a start point to a goal point. To begin with, let's introduce an abstract definition of our aim: Let a weighted graph G = (E,V), with E the set of edges and V the set of vertices (or nodes), and a function $\delta$, such that $\delta(e) \in \Re_{+}$. V represents the possible positions of the robot, E the possible paths between positions and $\delta$ the cost of an edge (because moving costs time!). 
+	The start node is $n_S \in E$ and the goal node $n_G \in E$.
+	Now that we have everything to discuss how to find a p
+	
+	\subsection{Dijkstra's algorithm}
+	All nodes, except $n_S$, are assumed to be distant from $n_S$ of $+\inf$. 
+		
     \subsection{A*}\label{subsec:a*}
-    \subsubsection{Basics}
+    A* is an \textbf{informed search} algorithm. It means that it knows the complete graph
 
-    \section{D*-lite}\label{sec:d*-lite}
+	The node evaluation is done as following: f(n) = g(n) + h(n), where f(n) is the estimation of the total cost, g(n) is th cost from $n_S$ to n and h(n) is the cost from n to $n_G$. the node with the lowest cost is choen.
+	
+	There is a fundamental constraint that h must obey: it must be consistent, i.e. $\forall (x,y) \in E^2, h(x) \geq d(x,y) + h(y).$
+    
+
+    \subsection{D*-lite}\label{sec:d*-lite}
+    
+    \cite{koenig2002d}
     
     
     \href{https://en.wikipedia.org/wiki/D*}{https://en.wikipedia.org/wiki/D*}
+    
+    \subsection{What is really done by Kraken}
+    
 
     \section{Control theory}\label{sec:controlTheory}
 
